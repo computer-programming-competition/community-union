@@ -4,7 +4,10 @@ QT += network
 QT += core
 QT += multimedia
 QT += multimediawidgets
+INCLUDEPATH += /root/usr/local/bin/include
+
 LIBS += -lpthread -lboost_system -lboost_thread -ljsoncpp
+DEFINES +=BOOST_USE_LIB
 # uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 # for the remaining steps to build a custom Live Code Reload app see here: https://felgo.com/custom-code-reload-app/
 #CONFIG += felgo-live
@@ -59,3 +62,16 @@ macx {
 
 HEADERS += \
     client.h
+
+DISTFILES += \
+    qml/Custom suite/MsgDialog.qml \
+    qml/UserPage.qml \
+    qml/MainPage.qml \
+    qml/Organization/Organization.qml \
+    organization-image/basketball.jpg \
+    organization-image/e-commerce.jpg \
+    organization-image/hip-hop.jpg \
+    organization-image/weiqi.jpg \
+    qml/Organization/ActivityPage.qml \
+    qml/Organization/MemberList.qml
+

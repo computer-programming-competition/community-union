@@ -58,4 +58,4 @@ HEADERS += \
     database.h
 
 DISTFILES += \
-    ../Client/qml/LoginPage.qml
+

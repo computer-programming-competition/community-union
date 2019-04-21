@@ -2,12 +2,24 @@ import VPlayApps 1.0
 import VPlay 2.0
 import QtQuick 2.9
 import client 1.0
+import "Custom suite"
+import "Organization"
 App{
     onInitTheme: {
-        Theme.platform = "ios"
+        Theme.platform = "andriod"
+    }
+    //property bool NetState: false
+    /*Client{
+        id:client
+
+
+    }*/
+
+    MsgDialog{
+
     }
     property bool userLoggedIn: false
-    LoginPage {
+    /*LoginPage {
         z: 1 // show login above actual app pages
         visible: opacity > 0
         enabled: visible
@@ -22,12 +34,10 @@ App{
         }
 
         Behavior on opacity { NumberAnimation { duration: 250 } } // page fade in/out
-    }
-    Client{
-        id:client
-    }  //
+    }*/
 
-
-
+    MainPage{
 
     }
+
+}

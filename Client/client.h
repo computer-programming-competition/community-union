@@ -3,6 +3,7 @@
 
 
 #include <QObject>
+
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
 #include <string>
@@ -22,10 +23,11 @@ class Client:public QObject
 
 public:
     Client();
-    Q_INVOKABLE void StartConnect();
+    Q_INVOKABLE bool StartConnect();
     Q_INVOKABLE void logining(QString name,QString password);
     void Readvideo();  //接受服务器的video消息
     void sendaccount();
+   // void JudgeNetState();
 
     //用户帐号
     QString userName();
@@ -40,6 +42,7 @@ private:
     QString m_userName;
     QString m_userPassword;
     bool m_loginging = false;
+    bool m_netEn = false; //网络环境判断
     QList<QString> _namelist;
 
 };

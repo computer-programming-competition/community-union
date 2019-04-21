@@ -8,20 +8,24 @@ ip::tcp::endpoint ep(boost::asio::ip::address::from_string("192.168.43.97"),6688
 ip::tcp::socket sock(service);
 Client::Client()
 {
-    StartConnect();
+    m_netEn=StartConnect();
+
 }
 
-void Client::StartConnect()
+bool Client::StartConnect()
 {
     boost::system::error_code ec;
     sock.async_connect(ep,[](const boost::system::error_code &ec)
     {
         if(ec){
             cout << ec.message() <<endl;
-            return ;
+            return false;
         }
     });
     service.run();
+    return true;
+
+
 }
 
 void Client::logining(QString name, QString password)
@@ -90,14 +94,14 @@ void Client::Readvideo()
 
 }
 
-void Client::sendaccount()
+void Client::sendaccount() //向服务器发送帐号
 {
     char data[1024];
      memset(data,0,sizeof(char)*1024);
       boost::system::error_code ec;
       string account ;
       Json::Value acc;
-      acc["name"] = m_userName.toStdString();
+      acc["name"] = m_userName.toStdString();  //转换为JSON，传到服务器
       acc["password"] = m_userPassword.toStdString();
       cout <<"send:" <<m_userName.toStdString() <<endl;
       account = acc.toStyledString();
@@ -108,8 +112,7 @@ void Client::sendaccount()
      {
          std::cout << boost::system::system_error(ec).what() << std::endl;
      }
-     char data1[10];
-     memset(data,0,sizeof(char)*10);
+
 //     cout << data <<endl;
 
 }
