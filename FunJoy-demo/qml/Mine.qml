@@ -1,9 +1,7 @@
 import QtQuick 2.0
 import VPlayApps 1.0
 import VPlay 2.0
-import user 1.0
-Page {
-    id:userpage
+Item {
     anchors.fill: parent
     property bool bMenuShown:false //侧边栏
     property Component settingsPage: ListPage {
@@ -17,29 +15,6 @@ Page {
         onItemSelected: {
         }
     }
-    AppButton {
-        id: button
-        z:2
-        text: "我的活动"
-        flat: false
-        radius: 90
-
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
-
-        onClicked: {
-            userpage.navigationStack.push(CommunityActivityPage,{})
-
-        }
-    }
-    User{
-        id:user
-        name:"蒋富豪"
-        personalS: "个性签名:"
-
-    }
-
     NavigationStack{
         id:stack
         Page{
@@ -57,7 +32,6 @@ Page {
                 anchors.fill: parent
                 // important to automatically rotate the image taken from the camera
                 autoTransform: true
-
                 fillMode: Image.PreserveAspectFit
             }
             //头像拾取——开始
@@ -72,7 +46,6 @@ Page {
                         property string iconFontName: Theme.iconFont.name
                         width: dp(72)
                         height: width
-
 
                         placeholderImage: "\uf007" // user
                         source: ""
@@ -119,14 +92,12 @@ Page {
                     AppText {
                         id: choosePhotoText
                         width: dp(130)
-                        text: user.name
+                        text: "点击上传头像"
                         anchors.verticalCenter: parent.verticalCenter
                         font.pixelSize: dp(12)
                         wrapMode: Text.WordWrap
                     }
-
                 }//头像拾取——结束
-
 
             }
             Connections{
@@ -147,29 +118,6 @@ Page {
                     onSettingMenu()
                 }
             }
-            Rectangle{
-                id:massageuser
-
-                AppText{
-                    id:personalS
-                    text: user.personalS
-
-                    height: parent.height+250
-                    font.pixelSize: dp(11)
-//                    wrapMode: Text.WordWrap
-                }
-                AppTextInput{
-                    id:personalS2
-                    text: "这个人很懒，什么都没留下。"
-                    x:personalS.x +70
-                    height: parent.height+250
-                    font.pixelSize: dp(11)
-                }
-
-
-
-
-            }
         }
     }
     Rectangle{
@@ -180,12 +128,21 @@ Page {
                 duration: 300
             }
         }
-
+//        transform:Translate{
+//            id:menuTranslate
+//            x:0
+//            Behavior on x{
+//                NumberAnimation{
+//                    duration:300;
+//                    easing.type: Easing.OutQuad
+//                }
+//            }
+//        }
         //色彩
         Column {
             id: tintColorRow
             anchors.centerIn: rectangeList
-            //spacing: rectangeList.spacing
+            spacing: rectangeList.spacing
             property color defaultColor: Theme.isIos ? "#007aff" : (Theme.isAndroid ? "#3f51b5" : "#01a9e2")
             property int currentIndex: 0
             visible: bMenuShown?1:0
@@ -195,7 +152,7 @@ Page {
             }
             AppText {
                 text: "Tint:"
-                //anchors.verticalCenter: rectangeList.verticalCenter
+                anchors.verticalCenter: rectangeList.verticalCenter
             }
 
             Repeater {

@@ -15,7 +15,18 @@ Page {
 
             }
         }
+        NavigationItem {
+            title: "活动"
+            icon: IconType
 
+            //page with sub page navigation
+            NavigationStack {
+                //SecondPage { }
+                CommunityActivityPage{
+
+                }
+            }
+        }
 
         NavigationItem {
             title: "Me"
@@ -28,6 +39,18 @@ Page {
                 }
             }
         }
+        NavigationItem {
+            title: "Text"
+            icon: IconType.twitter
+
+            //page with sub page navigation
+            NavigationStack {
+                //SecondPage { }
+                UserPageTwo{
+                }
+            }
+        }
+
     }
     ActivityPage{
         id:activitypage

@@ -20,9 +20,10 @@ Page {
             anchors.leftMargin: dp(15)
             border.color: "lightgray"
             border.width: dp(1)
-            width: dp(130)
+            width: dp(150)
             height: dp(200)
             radius: dp(6)
+
             Rectangle{
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -60,7 +61,7 @@ Page {
             anchors.leftMargin: dp(20)
             border.color: "lightgray"
             border.width: dp(1)
-            width: dp(130)
+            width: dp(150)
             height: dp(200)
             radius: dp(6)
             Rectangle{
@@ -96,7 +97,7 @@ Page {
             anchors.leftMargin: dp(15)
             border.color: "lightgray"
             border.width: dp(1)
-            width: dp(130)
+            width: dp(150)
             height: dp(200)
             radius: dp(6)
             Rectangle{
@@ -132,7 +133,7 @@ Page {
             anchors.leftMargin: dp(20)
             border.color: "lightgray"
             border.width: dp(1)
-            width: dp(130)
+            width: dp(150)
             height: dp(200)
             radius: dp(6)
             Rectangle{

@@ -3,7 +3,8 @@
 
 #include <QQmlApplicationEngine>
 #include "client.h"
-
+#include "activity.h"
+#include "useroperation.h"
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 //#include <FelgoLiveClient>
 
@@ -16,6 +17,8 @@ int main(int argc, char *argv[])
     // Use platform-specific fonts instead of Felgo's default font
     felgo.setPreservePlatformFonts(true);
      qmlRegisterType<Client>("client",1,0,"Client");//客户端
+     qmlRegisterType<UserOperation>("user",1,0,"User");
+     qmlRegisterType<Activity>("activity",1,0,"Activity1_0"); //huo dong
     QQmlApplicationEngine engine;
     felgo.initialize(&engine);
 
