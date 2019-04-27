@@ -4,12 +4,14 @@ import VPlayApps 1.0
 import QtQuick.Controls 2.2 as Quick2
 import QtQuick 2.0
 import QtMultimedia 5.0
-import activity 1.0
+//import activity 1.0
 
 Item {
+    property alias listMo: listMo
     anchors.fill: parent
 NavigationStack{
     property int sourcePath: 1
+
     Page {
         id: page
         title: "活动"
@@ -28,9 +30,11 @@ NavigationStack{
 //            }
 //        }
 
-        Activity1_0 {
-            id: activity1_0
-        }
+
+
+//        Activity1_0 {
+//            id: activity1_0
+//        }
 
         AppButton {
             id: button
@@ -48,7 +52,7 @@ NavigationStack{
 //                page.focus = false
 //                newActivityLoader.sourceComponent = newActivityComponent
 //                navigationStack.push(newActivityComponent, {})
-
+                listMo.append({"time_text":"1", "title_text":"2", "label_text":"3"})
             }
         }
 

@@ -1,3 +1,5 @@
+//author: duHongpeng
+//time: 19.4.26
 #ifndef CLIENT_H
 #define CLIENT_H
 
@@ -24,6 +26,7 @@ public:
     Q_INVOKABLE void StartConnect();
     Q_INVOKABLE void logining(QString name,QString password);
     void Readvideo();  //接受服务器的video消息
+    void ReceiveActivity();    //jie shou lai si fuwuqi de huodong xiaoxi
     void sendaccount();
 
     //用户帐号
@@ -34,6 +37,7 @@ public:
 signals:
     void userNameChanged();
     void userPasswordChanged();
+    void releaseActivity(QString title, QString time, QString label, QString content);
 private:
     //用户帐号
     QString m_userName;

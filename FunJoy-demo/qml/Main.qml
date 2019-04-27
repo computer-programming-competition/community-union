@@ -26,6 +26,8 @@ App{
     Client{
         id:client
     }
+
+
         Navigation{
             //navigationMode: navigationModeTabs
              // navigationMode: navigationModeDrawer
@@ -46,6 +48,8 @@ App{
 //                    myModel.append({ "modelText": "我", "modelColor": "#000000", "modelColorG": "#148014", "modelSrc": "qrc:/images/Main_P2PChat.svg", "modelSrcG": "qrc:/images/Main_P2PChatG.svg"})
 //                }
 //            }
+
+
             NavigationItem{
                 title:"主页"
                 icon:IconType.home
@@ -53,9 +57,12 @@ App{
 
             }
             NavigationItem{
+                id:navigationIt
                 title: "关注"
                 icon:IconType.heart
-                Activity{}
+                Activity{
+                    id: activityy
+                }
             }
             NavigationItem{
                 title: "发布"
@@ -78,5 +85,13 @@ App{
 //                New{}
 //            }
 
+        }
+        Connections {
+            target: client
+            onReleaseActivity: {
+                console.log("fsd")
+
+                activityy.listMo.append({"time_text":time, "title_text":title, "label_text":label})
+            }
         }
     }

@@ -29,6 +29,7 @@ void Client::logining(QString name, QString password)
     m_userName = name;
     m_userPassword = password;
 
+    ReceiveActivity();
     Readvideo();
     sendaccount();
     for (int i=0;i < _namelist.size();i++)
@@ -88,6 +89,55 @@ void Client::Readvideo()
 
     }
 
+}
+
+void Client::ReceiveActivity()
+{
+    string rec;
+
+    char dataSize[10];
+    boost::system::error_code ec;
+    memset(dataSize,0,sizeof(char)*10);//reset 0 to data[]
+
+    while(strlen(dataSize) == 0)
+        sock.read_some(buffer(dataSize,sizeof(char)*10),ec);
+    char data[1024];
+    memset(data,0,sizeof(char)*1024);
+    while(rec.length() < atoi(dataSize)){
+        sock.read_some(buffer(data),ec);
+        qDebug() << data;
+        rec.append(data,0,sizeof (data));
+        memset(data,0,sizeof(char)*512);
+    }
+    cout << rec;
+    if(ec)
+    {
+        std::cout << boost::system::system_error(ec).what() << std::endl;
+        return;
+    }
+    Json::Reader reader;
+    Json::Value resultname;
+    if(!reader.parse(rec.data(),resultname))
+    {
+        std::cout << "json received faild" <<std::endl;
+        return;
+    }else{
+        Json::Value jsTitle;
+        Json::Value jsTime;
+        Json::Value jsLabel;
+        Json::Value jsContent;
+        jsTitle = resultname["title"];
+        jsTime = resultname["time"];
+        jsLabel = resultname["label"];
+        jsContent = resultname["content"];
+        for (unsigned int i =0 ; i < resultname["title"].size();i++){
+            QString test1 = QString::fromStdString(jsTitle[i].asString());
+            QString test2 = QString::fromStdString(jsTime[i].asString());
+            QString test3 = QString::fromStdString(jsLabel[i].asString());
+            QString test4 = QString::fromStdString(jsContent[i].asString());
+            emit releaseActivity(QString::fromStdString(jsTitle[i].asString()), QString::fromStdString(jsTime[i].asString()), QString::fromStdString(jsLabel[i].asString()), QString::fromStdString(jsContent[i].asString()));
+        }
+    }
 }
 
 void Client::sendaccount()
