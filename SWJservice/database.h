@@ -21,22 +21,25 @@ public:
     void createtable();
     void createActivityTable();        //chuang jian huo dong biao
     void insertvideo();
-    void insertActivity(QString username, QString title, QString time, QString label, QString content);                              //cha ru yi ge xin de huo dong
+//    void insertActivity(QString username, QString title, QString time, QString label, QString content);                              //cha ru yi ge xin de huo dong
 
     bool verifyaccout(std::string name,std::string password);
     std::vector<QString> selectvidio();
     ~database(){
          dbconn.close();
     }
-//    std::vector<QString> setnamelist();
 
+    //xie ru shu ju ku
+    void activityToDatabase(QString username, QString title, QString time, QString label, QString content);
+
+    //
     void setActivity();    
-    Activity activity() const;
+    Activity* activity();
 
 private:
     QSqlDatabase dbconn;
     std::vector<QString> namelist;
-    Activity _activity;
+    Activity* _activity;
 };
 
 #endif // DATABASE_H

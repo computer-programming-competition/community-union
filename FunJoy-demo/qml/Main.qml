@@ -7,47 +7,29 @@ App{
         Theme.platform = "ios"
     }
     property bool userLoggedIn: false
-    LoginPage {
-        z: 1 // show login above actual app pages
-        visible: opacity > 0
-        enabled: visible
-        opacity: userLoggedIn ? 0 : 1 // hide if user is logged in
-        onLoginSucceeded:{
-           console.debug("client")
-            client.logining(tUsername,tUserPassword)//交互C++，发送name和password
-//            console.debug(client.userName)
-//            console.debug(client.userPassword)
+//    LoginPage {
+//        z: 1 // show login above actual app pages
+//        visible: opacity > 0
+//        enabled: visible
+//        opacity: userLoggedIn ? 0 : 1 // hide if user is logged in
+//        onLoginSucceeded:{
+//           console.debug("client")
+//            client.logining(tUsername,tUserPassword)//交互C++，发送name和password
+////            console.debug(client.userName)
+////            console.debug(client.userPassword)
 
-            userLoggedIn = true
-        }
+//            userLoggedIn = true
+//        }
 
-        Behavior on opacity { NumberAnimation { duration: 250 } } // page fade in/out
-    }
+//        Behavior on opacity { NumberAnimation { duration: 250 } } // page fade in/out
+//    }
     Client{
         id:client
     }
 
 
         Navigation{
-            //navigationMode: navigationModeTabs
-             // navigationMode: navigationModeDrawer
             navigationMode: navigationModeTabsAndDrawer
-            //            navigationDrawerItem: Text {
-//              text: "Open"
-//              anchors.centerIn: parent
-//              color: navigation.navigationTabsItemPressed ? "red" : "green"
-//            }
-//            footerView: BaseTabBar{
-//                id: bar
-//                height: 48
-//                width: parent.width
-//                Component.onCompleted: {
-//                    myModel.append({ "modelText": "消息", "modelColor": "#000000", "modelColorG": "#148014", "modelSrc": "qrc:/images/Chat_MsgRecord.svg", "modelSrcG": "qrc:/images/Chat_MsgRecordG.svg"})
-//                    myModel.append({ "modelText": "联系人", "modelColor": "#000000", "modelColorG": "#148014", "modelSrc": "qrc:/images/Chat_FriendManager.svg", "modelSrcG": "qrc:/images/Chat_FriendManagerG.svg"})
-//                    myModel.append({ "modelText": "发现", "modelColor": "#000000", "modelColorG": "#148014", "modelSrc": "qrc:/images/Mobile_Find.svg", "modelSrcG": "qrc:/images/Mobile_FindG.svg"})
-//                    myModel.append({ "modelText": "我", "modelColor": "#000000", "modelColorG": "#148014", "modelSrc": "qrc:/images/Main_P2PChat.svg", "modelSrcG": "qrc:/images/Main_P2PChatG.svg"})
-//                }
-//            }
 
 
             NavigationItem{
@@ -58,7 +40,7 @@ App{
             }
             NavigationItem{
                 id:navigationIt
-                title: "关注"
+                title: "活动"
                 icon:IconType.heart
                 Activity{
                     id: activityy
@@ -79,19 +61,6 @@ App{
                 icon:IconType.minussquareo
                 Mine{}
             }
-//            NavigationItem{
-//                title: "测试"
-//                icon:IconType.laptop
-//                New{}
-//            }
 
-        }
-        Connections {
-            target: client
-            onReleaseActivity: {
-                console.log("fsd")
-
-                activityy.listMo.append({"time_text":time, "title_text":title, "label_text":label})
-            }
         }
     }

@@ -73,4 +73,5 @@ HEADERS += \
     recordervideo.h \
     client.h \
     activity.h \
-    newactivity.h
+    newactivity.h \
+    cmd.h

@@ -34,7 +34,9 @@ SOURCES += main.cpp \
     swjserver.cpp \
     database.cpp \
     activity.cpp \
-    newactivity.cpp
+    newactivity.cpp \
+    tcpserver.cpp \
+    tcpclientsocket.cpp
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
@@ -59,4 +61,7 @@ HEADERS += \
     swjserver.h \
     database.h \
     activity.h \
-    newactivity.h
+    newactivity.h \
+    tcpserver.h \
+    tcpclientsocket.h \
+    cmd.h

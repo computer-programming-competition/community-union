@@ -11,6 +11,7 @@ database::database()
 
     qDebug("database open status: %d\n", dbconn.open());
     createActivityTable();
+    _activity = new Activity();
 //    insertvideo();
 //    selectvidio();
 //    qDebug()<< namelist.size();
@@ -54,8 +55,8 @@ void database::createtable()
 void database::createActivityTable()
 {
     QSqlQuery query;
-    bool success = query.exec("CREATE TABLE activity (username varchar(20) primary key, title varchar(20), time varchar(20), label varchar(10), content varchar(100))");
-    query.exec("insert into activity values(0, '点燃五四之火', '2019.05.9～2019.05.24', '思想成长', 'balabalabala')");
+    bool success = query.exec("CREATE TABLE activity (username varchar(20), title varchar(20), time varchar(20), label varchar(10), content varchar(100))");
+    query.exec("insert into activity values('0', '点燃五四之火', '2019.05.9～2019.05.24', '思想成长', 'balabalabala')");
     //bool success = query.exec("CREATE TABLE account12 (username varchar(10),password varchar(20))");
     if(success)
         qDebug()<<QObject::tr("数据库huodong表创建成功！\n");
@@ -162,21 +163,28 @@ std::vector<QString> database::selectvidio()
 
 }
 
+void database::activityToDatabase(QString username, QString title, QString time, QString label, QString content)
+{
+    QSqlQuery query;
+    QString a = "insert into activity values('" + username +"','"+title+"','"+time+"','"+label+"','"+content+"')";
+    query.exec(a);
+}
+
 void database::setActivity()
 {
-    for(auto &temp : _activity._newActivity){
+    for(auto &temp : _activity->newActivity()){
         delete temp;
     }
-    _activity._newActivity.clear();
+    _activity->_newActivity.clear();
 
     QSqlQuery query;
     query.exec( "select * from activity");// 执行查询操作
     while (query.next()) {
-        _activity.setNewActivity(query.value(1).toString(), query.value(2).toString(), query.value(3).toString(), query.value(4).toString());
+        _activity->setNewActivity(query.value(1).toString(), query.value(2).toString(), query.value(3).toString(), query.value(4).toString());
     }
 }
 
-Activity database::activity() const
+Activity* database::activity()
 {
     return _activity;
 }

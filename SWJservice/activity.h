@@ -6,6 +6,7 @@
 #include <QString>
 #include <iostream>
 #include <vector>
+#include <QList>
 
 class NewActivity;
 
@@ -27,13 +28,13 @@ public:
 
     void setNewActivity(QString title, QString time, QString label, QString content);      //tian jia xin fa bu de huo dong
     std::vector<NewActivity *> newActivity();    //ke yi zhao dao gai yong hu suo you fa bu de huo dong
+    QList<QString> getMessageList();
     std::vector<NewActivity*> _newActivity;
 private:
     QString m_title;  //huodong zhuti
     QString m_time;   //huo dong shi jian
     QString m_label;  //huo dong biao qian
-    QString m_content; //huo dong nei rong
-
+    QString m_content; //huo dong nei rong    
 };
 
 #endif // ACTIVITY_H

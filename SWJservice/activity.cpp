@@ -1,5 +1,8 @@
 #include "activity.h"
 #include "newactivity.h"
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 Activity::Activity()
 {
@@ -54,4 +57,18 @@ void Activity::setNewActivity(QString title, QString time, QString label, QStrin
 std::vector<NewActivity *> Activity::newActivity()
 {
     return _newActivity;
+}
+
+QList<QString> Activity::getMessageList()
+{
+    QList<QString> Msg;
+    for(auto temp : _newActivity){
+        QJsonObject activityList;
+        activityList.insert("title", temp->title());
+        activityList.insert("time", temp->time());
+        activityList.insert("label", temp->label());
+        activityList.insert("content", temp->content());
+        Msg.append(QString(QJsonDocument(activityList).toJson()));
+    }
+    return Msg;
 }

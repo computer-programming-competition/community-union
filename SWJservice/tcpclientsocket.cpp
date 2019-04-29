@@ -1,30 +1,55 @@
-#include "client.h"
-#include <algorithm>
-#include <iostream>
+#include "tcpclientsocket.h"
+#include "cmd.h"
+#include <QDataStream>
+#include "tcpserver.h"
 //#include "json/json.h"
+#include <QDebug>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
-#include <QDebug>
-#include "cmd.h"
-//io_service service;     //必有的io——service对象
-//ip::tcp::endpoint ep(boost::asio::ip::address::from_string("127.0.0.1"),6688);
-//ip::tcp::socket sock(service);
-Client::Client()
+#include <QList>
+
+TcpClientSocket::TcpClientSocket(QObject *parent)
 {
-    tcpConnected();
-    connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(dataReceived()));
+    connect(this, SIGNAL(readyRead()), this, SLOT(dataReceived()));
+    connect(this, SIGNAL(disconnected()), this, SLOT(slotDisconnected()));
 }
 
-void Client::sendActivity(QString title, QString time, QString label, QString content)
+void TcpClientSocket::sendActivity()
 {
-    QJsonObject activityList;
-    activityList.insert("title", title);
-    activityList.insert("time", time);
-    activityList.insert("label", label);
-    activityList.insert("content", content);
+    _tcpserver->getDatabase()->setActivity();
+    QList<QString> Msg = _tcpserver->getDatabase()->activity()->getMessageList();
 
-    QString msg = QString(QJsonDocument(activityList).toJson());  /////////
+
+    for(int i=0; i<Msg.count(); i++){
+        QString msg = Msg.at(i);
+
+        //构造数据包
+        qint64 totalBytes = 0;
+        QByteArray block;
+        QDataStream output(&block,QIODevice::WriteOnly);
+        output.setVersion(QDataStream::Qt_5_2);
+        totalBytes = msg.toUtf8().size();
+
+
+        //向缓冲区写入文件头
+        output<<qint64(totalBytes)<<qint64(Activity_send);
+        totalBytes += block.size();
+        output.device()->seek(0);
+        output<<totalBytes;
+        write(block);
+        block.resize(0);
+        for(int i=0;i<10000;i++)
+
+        block = msg.toUtf8();
+        write(block);
+        block.resize(0);
+    }
+}
+
+void TcpClientSocket::clearActiviy()
+{
+    QString msg = "clear activiy";
 
     //构造数据包
     qint64 totalBytes = 0;
@@ -35,51 +60,30 @@ void Client::sendActivity(QString title, QString time, QString label, QString co
 
 
     //向缓冲区写入文件头
-    output<<qint64(totalBytes)<<qint64(ReleaseActivity);
+    output<<qint64(totalBytes)<<qint64(Clear_activity);
     totalBytes += block.size();
     output.device()->seek(0);
     output<<totalBytes;
-    tcpSocket->write(block);
+    write(block);
     block.resize(0);
     for(int i=0;i<10000;i++)
 
-        block = msg.toUtf8();
-    tcpSocket->write(block);
+    block = msg.toUtf8();
+    write(block);
     block.resize(0);
 }
 
-QString Client::userName()
+void TcpClientSocket::dataReceived()
 {
-    return m_userName;
-}
-
-void Client::setUserName(QString name)
-{
-    m_userName = name;
-    emit userNameChanged();
-}
-
-QString Client::userPassword()
-{
-    return m_userPassword;
-}
-
-void Client::setUserPassword(QString password)
-{
-    m_userPassword = password;
-    emit userPasswordChanged();
-}
-
-void Client::dataReceived()
-{
-    if(tcpSocket->bytesAvailable() <= 0)
+    qDebug() << "data received()";
+    if(bytesAvailable() <= 0)
     {
         return;
     }
 
     //从缓存区中去除数据，但是不确定取出来的字节数
     QByteArray  buffer;
-    buffer = tcpSocket->readAll();
+    buffer = readAll();
     m_buffer.append(buffer);
     unsigned int totalLen = m_buffer.size();
     //这边确实需要利用长度做while循环，因为有可能一下子读取到两条以上的完整记录，就需要进行循环处理了
@@ -99,27 +103,26 @@ void Client::dataReceived()
         //足够长了就开始解析
         switch(serverCmd)
         {
-        case Activity_send:
+        case ReleaseActivity:
         {
             QString rec;
-            //
             QByteArray datas = m_buffer.mid(2*sizeof(qint64), totalBytes-2*sizeof(qint64));
             rec.prepend(datas);
-            //
-
             QJsonDocument jsonDocument = QJsonDocument::fromJson(rec.toLocal8Bit().data());
             QJsonObject jsonObject = jsonDocument.object();
+
 //            QString test1 = jsonObject.value("title").toString();
 //            QString test2 = jsonObject.value("time").toString();
 //            QString test3 = jsonObject.value("label").toString();
 //            QString test4 = jsonObject.value("content").toString();
-            emit releaseActivity(jsonObject.value("title").toString(), jsonObject.value("time").toString(), jsonObject.value("label").toString(), jsonObject.value("content").toString());
+
+            _tcpserver->getDatabase()->activityToDatabase("0",jsonObject.value("title").toString(),jsonObject.value("time").toString(),jsonObject.value("label").toString(),jsonObject.value("content").toString());
+
+            clearActiviy();
+            emit doFlushActivity();
+
 
             break;
-        }
-        case Clear_activity:
-        {
-            emit clearActivity();
         }
         }
         //缓存多余的数据
@@ -130,18 +133,7 @@ void Client::dataReceived()
     }
 }
 
-void Client::sureConnected()
+void TcpClientSocket::slotDisconnected()
 {
-    qDebug() << "have connected";
-}
-
-void Client::tcpConnected()
-{
-    tcpSocket = new QTcpSocket(this);
-    serverIP =new QHostAddress();
-    serverIP->setAddress("127.0.0.1");  //连接IP
-    //    tcpSocket->connectToHost();
-    tcpSocket->connectToHost(*serverIP, 6688);
-
-    connect(tcpSocket, SIGNAL(connected()), this, SLOT(sureConnected()));
+    emit disconnected(this->socketDescriptor());
 }

@@ -3,11 +3,12 @@
 #include <VPApplication>
 
 #include <QQmlApplicationEngine>
-#include <swjserver.h>
+#include <QGuiApplication>
+#include "tcpserver.h"
 
 int main(int argc, char *argv[])
 {
-
-    Server service;
-    service.connect();
+    QGuiApplication app(argc, argv);
+    TcpServer tcpserver;
+    return app.exec();
 }
