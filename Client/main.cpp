@@ -5,6 +5,8 @@
 #include "client.h"
 #include "activity.h"
 #include "useroperation.h"
+#include "community.h"
+#include "communityitem.h"
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 //#include <FelgoLiveClient>
 
@@ -19,6 +21,8 @@ int main(int argc, char *argv[])
      qmlRegisterType<Client>("client",1,0,"Client");//客户端
      qmlRegisterType<UserOperation>("user",1,0,"User");
      qmlRegisterType<Activity>("activity",1,0,"Activity1_0"); //huo dong
+     qmlRegisterType<MyCommunity>("community",1,0,"Community");
+     qmlRegisterType<communityItem>("communityitem",1,0,"CommunityItem");
     QQmlApplicationEngine engine;
     felgo.initialize(&engine);
 

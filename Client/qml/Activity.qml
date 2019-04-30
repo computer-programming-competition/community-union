@@ -67,7 +67,7 @@ Page {
         id: activityCo
         Rectangle {
             width: page.width
-            height: image.height + time.height + title.height + label.height + 50
+            height: 300
 
             Rectangle {
                 id: image

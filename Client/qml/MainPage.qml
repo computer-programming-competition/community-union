@@ -1,16 +1,44 @@
 import Felgo 3.0
 import "Organization"
+import user 1.0
+import communityitem 1.0
+import community 1.0
+import "model"
+import client 1.0
+import "logic"
 Page {
+    id:mainpage
+    User{
+        id:user
+        name:"蒋富豪"
+        personalS: "个性签名:"
+
+    }
+
+    CommunityItem{
+        id:communityitem
+        property int num: 0
+
+    }
+    Community{
+        id:community1
+    }
+
+
+
     Navigation {
+        navigationMode: navigationModeTabsAndDrawer
         NavigationItem {
             title: "Community"
             icon: IconType.header
 
             //page without navigation stack - no sub pages
             NavigationStack{
-                Organization{
-                    id:organization
-                    visible:true
+
+                CommunityList{
+                    id:communitylist
+                    //visible:true
+
                 }
 
             }
@@ -23,6 +51,7 @@ Page {
             NavigationStack {
                 //SecondPage { }
                 CommunityActivityPage{
+                    id:activitypage
 
                 }
             }
@@ -36,28 +65,16 @@ Page {
             NavigationStack {
                 //SecondPage { }
                 UserPage{
-                }
-            }
-        }
-        NavigationItem {
-            title: "Text"
-            icon: IconType.twitter
 
-            //page with sub page navigation
-            NavigationStack {
-                //SecondPage { }
-                UserPageTwo{
                 }
+
             }
         }
 
+
+
     }
-    ActivityPage{
-        id:activitypage
-        visible: false
-    }
-    MemberList{
-        id:memberlist
-        visible:false
-    }
+
+
+
 }

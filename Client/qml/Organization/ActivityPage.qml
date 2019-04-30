@@ -1,27 +1,10 @@
 import VPlayApps 1.0
 import QtQuick 2.0
-
+import user 1.0
+import community 1.0
 Page {
     id:activityPage
-
-    NavigationBar{
-        id:navigationbar
-        leftBarItem: IconButtonBarItem{
-            icon: IconType.backward
-            onClicked: {
-                activitypage.visible = false
-                organization.visible = true
-            }
-        }
-        rightBarItem: IconButtonBarItem{
-            icon:IconType.list
-            onClicked: {
-                activitypage.visible = false
-                memberlist.visible = true
-            }
-        }
-    }
-
+    property int number:0
     Rectangle{
         id:introduction
         width: parent.width-dp(10)
@@ -44,7 +27,7 @@ Page {
         Text{
             id:introContent
             width: parent.width - dp(2)*2
-            text:qsTr("    篮球社成立于2014年，旨在聚集篮球爱好者一起锻炼身体、交流篮球技巧，提高篮球技术。")
+            text: communityitem.nowCIntroduce(number)
             wrapMode: Text.WrapAnywhere
             lineHeight: 1.5
             font.pixelSize: sp(10)
@@ -103,5 +86,13 @@ Page {
         anchors.horizontalCenter: parent.horizontalCenter
         text: qsTr("加入我们")
         textSize: sp(15)
+        onClicked: {
+
+            user.setCommunity("篮球社")
+            console.debug("我的社团：",user.community)
+
+
+        }
+
     }
 }

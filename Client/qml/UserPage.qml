@@ -2,6 +2,7 @@ import QtQuick 2.0
 import VPlayApps 1.0
 import VPlay 2.0
 import user 1.0
+import "Organization"
 Page {
     id:userpage
     anchors.fill: parent
@@ -13,45 +14,48 @@ Page {
             {text: "开启声音",detailText: "是否开启视频背景音乐",icon: IconType.volumedown},
             {text: "主题", detailText: "选择应用的主题颜色",icon: IconType.file},
         ]
-        section.property: "group"
-        onItemSelected: {
+        delegate: SimpleRow{
+            onSelected: {
+                onSettingMenu()
+                userpage.settingsPage.push(modelData)
+                userpage.settingsPageChanged()
+            }
         }
+
     }
-    AppButton {
-        id: button
-        z:2
-        text: "我的活动"
-        flat: false
-        radius: 90
 
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
 
-        onClicked: {
-            userpage.navigationStack.push(CommunityActivityPage,{})
+
+    Component{
+        id:ac
+        ActivityPage{
 
         }
-    }
-    User{
-        id:user
-        name:"蒋富豪"
-        personalS: "个性签名:"
 
     }
+    GridView{
+
+    }
+    rightBarItem: IconButtonBarItem {
+        icon: IconType.gears //设置
+        onClicked:{
+            //                    stack.popAllExceptFirstAndPush(settingsPage)
+            onSettingMenu();
+        }
+    }
+    Component {
+        id: memberlist
+        MemberList {}
+    }
+
 
     NavigationStack{
         id:stack
         Page{
             id:stackPage
-            leftBarItem: IconButtonBarItem {
-                icon: IconType.gears //设置
-                onClicked:{
-                    //                    stack.popAllExceptFirstAndPush(settingsPage)
-                    onSettingMenu();
-                }
-            }
+
             title: "我的"
+
             AppImage {
                 id: image
                 anchors.fill: parent
@@ -60,6 +64,9 @@ Page {
 
                 fillMode: Image.PreserveAspectFit
             }
+
+
+
             //头像拾取——开始
             Column{
                 Row{
@@ -126,8 +133,23 @@ Page {
                     }
 
                 }//头像拾取——结束
+                Row{
+                    AppText{
+                        id:personalS
+                        text: user.personalS
 
-
+                        //height: parent.height+250
+                        font.pixelSize: dp(11)
+                        //                    wrapMode: Text.WordWrap
+                    }
+                    AppTextInput{
+                        id:personalS2
+                        text: "这个人很懒，什么都没留下。"
+                        //x:image.x +70
+                        //height: parent.height+250
+                        font.pixelSize: dp(11)
+                    }
+                }
             }
             Connections{
                 target: nativeUtils
@@ -147,29 +169,63 @@ Page {
                     onSettingMenu()
                 }
             }
-            Rectangle{
-                id:massageuser
 
-                AppText{
-                    id:personalS
-                    text: user.personalS
 
-                    height: parent.height+250
-                    font.pixelSize: dp(11)
-//                    wrapMode: Text.WordWrap
+                Row{
+                    anchors.bottom: parent.bottom
+                    anchors.topMargin: 5
+                    anchors.left: parent.left
+                    anchors.leftMargin: 5
+                    spacing: 5
+                    AppButton {
+                        id: button
+                        z:2
+                        text: "我的社团"
+                        flat: false
+                        radius: 90
+
+                        //anchors.horizontalCenter: parent.horizontalCenter
+                        //anchors.bottom: parent.bottom
+                        //        anchors.bottomMargin: 30
+
+                        onClicked: {
+                            userpage.navigationStack.push(ac,{})
+                        }
+                    }
+                    AppButton {
+                        id: button2
+                        z:2
+                        text: "我的设置"
+                        flat: false
+                        radius: 90
+
+                        //        anchors.horizontalCenter: parent.horizontalCenter
+                        //anchors.bottom: parent.bottom
+                        //        anchors.bottomMargin: 30
+
+                        onClicked: {
+                            userpage.navigationStack.push(settingsPage)
+                        }
+
                 }
-                AppTextInput{
-                    id:personalS2
-                    text: "这个人很懒，什么都没留下。"
-                    x:personalS.x +70
-                    height: parent.height+250
-                    font.pixelSize: dp(11)
+                    AppButton {
+                        id: button3
+                        z:2
+                        text: "社团管理"
+                        flat: false
+                        radius: 90
+
+                        //        anchors.horizontalCenter: parent.horizontalCenter
+                        //anchors.bottom: parent.bottom
+                        //        anchors.bottomMargin: 30
+
+                        onClicked: {
+                            userpage.navigationStack.push(memberlist)
+                        }
+
                 }
-
-
-
-
             }
+
         }
     }
     Rectangle{
@@ -181,11 +237,10 @@ Page {
             }
         }
 
-        //色彩
         Column {
             id: tintColorRow
             anchors.centerIn: rectangeList
-            //spacing: rectangeList.spacing
+            spacing: rectangeList.spacing
             property color defaultColor: Theme.isIos ? "#007aff" : (Theme.isAndroid ? "#3f51b5" : "#01a9e2")
             property int currentIndex: 0
             visible: bMenuShown?1:0
@@ -195,7 +250,7 @@ Page {
             }
             AppText {
                 text: "Tint:"
-                //anchors.verticalCenter: rectangeList.verticalCenter
+                anchors.verticalCenter: rectangeList.verticalCenter
             }
 
             Repeater {
@@ -212,6 +267,7 @@ Page {
                 }
             }
         }
+
     }
     //打开侧边栏
     function onSettingMenu(){
@@ -220,4 +276,5 @@ Page {
         bMenuShown = !bMenuShown;
 
     }
+
 }

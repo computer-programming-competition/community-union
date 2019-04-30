@@ -1,16 +1,14 @@
-import VPlayApps 1.0
+import Felgo 3.0
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 
 Page {
     id: loginPage
-    title: "Login"
+    title: qsTr("Login")
     signal loginSucceeded
 
-    property  alias tUsername:  txtUsername.text
-    property  alias tUserPassword:  txtPassword.text
-
-    backgroundColor: Qt.rgba(0,0,0, 0.75) // page background is translucent, we can see other items beneath the page
+    backgroundColor: Qt.rgba(100,100,100) // page background is translucent, we can see other items beneath the page
+    useSafeArea: false // do not consider safe area insets of screen
 
     // login form background
     Rectangle {
@@ -41,7 +39,7 @@ Page {
 
         // email text and field
         AppText {
-            text: qsTr("Account")
+            text: qsTr("E-mail")
             font.pixelSize: sp(12)
         }
 
@@ -83,12 +81,9 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     loginPage.forceActiveFocus() // move focus away from text fields
-
-                    // simulate successful login
-                    console.debug("logging in ...")
-                    console.debug( txtPassword.text)
-                    console.debug(txtUsername.text)
                     loginSucceeded()
+                    // call login action
+                    logic.login(txtUsername.text, txtPassword.text)
                 }
             }
 
@@ -99,7 +94,7 @@ Page {
                 onClicked: {
                     loginPage.forceActiveFocus() // move focus away from text fields
 
-                    // call your server code to register here
+                    // call your logic action to register here
                     console.debug("registering...")
                 }
             }

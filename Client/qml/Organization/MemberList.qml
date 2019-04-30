@@ -1,19 +1,33 @@
 import VPlayApps 1.0
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
-
+import ".."
 Page {
     id:memberlist
-    NavigationBar{
-        id:navigationbar
-        leftBarItem: IconButtonBarItem{
-            icon: IconType.backward
-            onClicked: {
-                activitypage.visible = true
-                memberlist.visible = false
-            }
+
+    Component {
+        id: newActivityComponent
+
+           NewActivity {}
+
+    }
+
+    AppButton {
+        id: button
+        z:2
+        text: "+活动"
+        flat: false
+        radius: 90
+
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 30
+
+        onClicked: {
+            userpage.navigationStack.push(newActivityComponent)
         }
     }
+
     ColumnLayout{
         id:list
         spacing: 1
