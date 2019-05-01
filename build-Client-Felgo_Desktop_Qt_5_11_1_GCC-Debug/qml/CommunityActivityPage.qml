@@ -82,6 +82,7 @@ Page {
 
                     page.navigationStack.push(activity)
                 }
+
             }
 
             Rectangle {
@@ -91,7 +92,11 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
                 anchors.topMargin: 10
-                color: "blue"
+                Image {
+                    id: imag
+                    anchors.fill: parent
+                    source: "./Image/timg.jpg"
+                }
             }
 
             AppText {
