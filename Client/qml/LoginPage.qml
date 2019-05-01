@@ -84,6 +84,7 @@ Page {
                     loginSucceeded()
                     // call login action
                     logic.login(txtUsername.text, txtPassword.text)
+                    client.flushActivity()
                 }
             }
 

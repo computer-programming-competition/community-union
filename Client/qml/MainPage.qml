@@ -29,6 +29,19 @@ Page {
     Navigation {
         navigationMode: navigationModeTabsAndDrawer
         NavigationItem {
+            title: "活动"
+            icon: IconType.apple
+
+            //page with sub page navigation
+            NavigationStack {
+                //SecondPage { }
+                CommunityActivityPage{
+                    id:activitypage
+                }
+            }
+        }
+
+        NavigationItem {
             title: "Community"
             icon: IconType.header
 
@@ -44,20 +57,6 @@ Page {
             }
         }
 
-        NavigationItem {
-            title: "活动"
-            icon: IconType
-
-            //page with sub page navigation
-            NavigationStack {
-                //SecondPage { }
-                CommunityActivityPage{
-                    id:activitypage
-
-                }
-            }
-
-        }
 
         NavigationItem {
             title: "Me"

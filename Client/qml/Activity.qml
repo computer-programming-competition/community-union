@@ -4,7 +4,7 @@ import VPlayApps 1.0
 import QtQuick.Controls 2.2 as Quick2
 import QtQuick 2.0
 import QtMultimedia 5.0
-import "Organization"
+
 
 Page {
     id: page
@@ -14,11 +14,9 @@ Page {
     Connections {
         target: client
         onReleaseActivity: {
-            console.log("ff")
-            listMo.append({"time_text":time, "title_text":title, "label_text":label})
+            listMo.append({"time_text":time, "title_text":title, "label_text":label, "content_text":content})
         }
     }
-
 
     Connections {
         target: client
@@ -27,32 +25,14 @@ Page {
             listMo.clear()
         }
     }
-    Component{
-        id:activity
-        ActivityPage{
-            id:activityPage
-
-        }
-    }
     Component {
         id: newActivityComponent
         NewActivity {}
     }
-    Row{
-    AppButton {
-        id: button2
-        z:2
-        text: "进入活动"
-        flat: false
-        radius: 90
 
-        //anchors.horizontalCenter: parent.horizontalCenter
-        //anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
-
-        onClicked: {
-            page.navigationStack.push(newActivityComponent)
-        }
+    Component {
+        id: activityMessageCom
+        ActivityMessage {}
     }
 
     AppButton {
@@ -69,7 +49,6 @@ Page {
         onClicked: {
             page.navigationStack.push(newActivityComponent)
         }
-    }
     }
 
     Loader {
@@ -93,13 +72,6 @@ Page {
         Rectangle {
             width: page.width
             height: 300
-            AppButton{
-                anchors.fill: parent
-                onClicked: {
-                     console.debug("omclient")
-                    page.navigationStack.push(activity)
-                }
-            }
 
             Rectangle {
                 id: image
@@ -108,8 +80,19 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
                 anchors.topMargin: 10
-                color: "yellow"
+                color: "blue"
 
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        page.navigationStack.push(activityMessageCom, {
+                                                      time_text_text: time_text,
+                                                      title_text_text: title_text,
+                                                      label_text_text: label_text,
+                                                      content_text_text: content_text
+                                                  })
+                    }
+                }
             }
 
             AppText {
@@ -139,7 +122,6 @@ Page {
         }
     }
 
-
     Quick2.ScrollView {
         id: scrollView
         anchors.fill: parent
@@ -149,6 +131,5 @@ Page {
             delegate: activityCo
         }
     }
-
 }
 

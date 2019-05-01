@@ -48,6 +48,32 @@ void Client::sendActivity(QString title, QString time, QString label, QString co
     block.resize(0);
 }
 
+void Client::flushActivity()
+{
+    QString msg = "flush activiy";  /////////
+
+    //构造数据包
+    qint64 totalBytes = 0;
+    QByteArray block;
+    QDataStream output(&block,QIODevice::WriteOnly);
+    output.setVersion(QDataStream::Qt_5_2);
+    totalBytes = msg.toUtf8().size();
+
+
+    //向缓冲区写入文件头
+    output<<qint64(totalBytes)<<qint64(FlushActivity);
+    totalBytes += block.size();
+    output.device()->seek(0);
+    output<<totalBytes;
+    tcpSocket->write(block);
+    block.resize(0);
+    for(int i=0;i<10000;i++)
+
+        block = msg.toUtf8();
+    tcpSocket->write(block);
+    block.resize(0);
+}
+
 QString Client::userName()
 {
     return m_userName;
@@ -139,7 +165,7 @@ void Client::tcpConnected()
 {
     tcpSocket = new QTcpSocket(this);
     serverIP =new QHostAddress();
-    serverIP->setAddress("10.253.224.83");  //连接IP
+    serverIP->setAddress("127.0.0.1");  //连接IP
     //    tcpSocket->connectToHost();
     tcpSocket->connectToHost(*serverIP, 6688);
 

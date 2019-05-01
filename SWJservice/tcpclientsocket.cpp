@@ -124,6 +124,11 @@ void TcpClientSocket::dataReceived()
 
             break;
         }
+        case FlushActivity:
+        {
+            clearActiviy();
+            emit doFlushActivity();
+        }
         }
         //缓存多余的数据
         buffer = m_buffer.right(totalLen - totalBytes); //截取下一个数据包的数据，留作下次读取

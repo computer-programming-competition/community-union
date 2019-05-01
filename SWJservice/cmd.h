@@ -12,7 +12,7 @@
 
 //客户端------->服务器
 #define     ReleaseActivity        0x0D01   //fa bu huo dong
-//#define     AddGroup               0x0D02   //客户端添加房间
+#define     FlushActivity          0x0D02   //
 //#define     Msg                    0x0D03   //客户端发送聊天信息
 //#define     Connet_Success         0x0D04   //连接成功应答包
 

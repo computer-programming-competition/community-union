@@ -49,7 +49,6 @@ App{
     }
 
     MainPage{
-
     }
 
 }

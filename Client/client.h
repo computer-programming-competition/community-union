@@ -26,6 +26,7 @@ class Client:public QObject
 public:
     Client();
     Q_INVOKABLE void sendActivity(QString title, QString time, QString label, QString content);
+    Q_INVOKABLE void flushActivity();
 //    Q_INVOKABLE void StartConnect();
 //    Q_INVOKABLE void logining(QString name,QString password);
 //    void Readvideo();  //接受服务器的video消息
