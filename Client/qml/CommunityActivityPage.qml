@@ -4,7 +4,7 @@ import VPlayApps 1.0
 import QtQuick.Controls 2.2 as Quick2
 import QtQuick 2.0
 import QtMultimedia 5.0
-
+import "Organization"
 
 Page {
     id: page
@@ -30,6 +30,14 @@ Page {
         id: newActivityComponent
         NewActivity {}
     }
+    Component{
+        id:activity
+        ActivityPage{
+            id:activityPage
+
+        }
+    }
+
 
     AppButton {
         id: button
@@ -68,6 +76,13 @@ Page {
         Rectangle {
             width: page.width
             height: image.height + time.height + title.height + label.height + 50
+            MouseArea{
+                anchors.fill:parent
+                onClicked: {
+
+                    page.navigationStack.push(activity)
+                }
+            }
 
             Rectangle {
                 id: image

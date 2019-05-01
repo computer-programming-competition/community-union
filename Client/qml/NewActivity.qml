@@ -19,7 +19,18 @@ Page {
 //                      font.pixelSize: 600
 //            }
             Column{
+                AppText {
+                    id: id
+                    text: "活动编号："
+                    x: 20
+                }
+                AppTextField {
+                    id: idwrite
+                    x: 20
+                    y: 30
+                    borderWidth: 0.5
 
+                }
                 AppText {
                     id: titleText
                     text: "主题"

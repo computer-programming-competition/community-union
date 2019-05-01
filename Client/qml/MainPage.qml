@@ -43,6 +43,7 @@ Page {
 
             }
         }
+
         NavigationItem {
             title: "活动"
             icon: IconType
@@ -55,6 +56,7 @@ Page {
 
                 }
             }
+
         }
 
         NavigationItem {
