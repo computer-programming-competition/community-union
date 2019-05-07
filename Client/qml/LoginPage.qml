@@ -7,6 +7,14 @@ Page {
     title: qsTr("Login")
     signal loginSucceeded
 
+    Connections {
+        target: client
+        onLoginn: {
+            console.log("fds")
+            loginSucceeded()
+        }
+    }
+
     backgroundColor: Qt.rgba(100,100,100) // page background is translucent, we can see other items beneath the page
     useSafeArea: false // do not consider safe area insets of screen
 
@@ -39,7 +47,7 @@ Page {
 
         // email text and field
         AppText {
-            text: qsTr("E-mail")
+            text: qsTr("Name")
             font.pixelSize: sp(12)
         }
 
@@ -81,12 +89,16 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     loginPage.forceActiveFocus() // move focus away from text fields
-                    loginSucceeded()
+                    console.debug("login")
                     // call login action
-                    logic.login(txtUsername.text, txtPassword.text)
+                    client.login(txtUsername.text, txtPassword.text)
+
+//                     loginSucceeded()
                     client.flushActivity()
                 }
             }
+
+
 
             AppButton {
                 text: qsTr("No account yet? Register now")

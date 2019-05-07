@@ -23,8 +23,8 @@ public:
     void insertvideo();
 //    void insertActivity(QString username, QString title, QString time, QString label, QString content);                              //cha ru yi ge xin de huo dong
 
-    bool verifyaccout(std::string name,std::string password);
-    std::vector<QString> selectvidio();
+    bool verifyaccout(QString name,QString password);
+
     ~database(){
          dbconn.close();
     }

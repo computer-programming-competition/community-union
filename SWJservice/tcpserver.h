@@ -22,6 +22,7 @@ public:
 public slots:
     //接受要广播的聊天信息
     void doFlushActivity();
+    void loginOk(bool s);
     //接收断开连接的信息
     void slotDisconnection(qintptr);
 

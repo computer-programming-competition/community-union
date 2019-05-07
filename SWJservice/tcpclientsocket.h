@@ -20,14 +20,17 @@ public:
 
     void sendActivity();
     void clearActiviy();
+    void verifyaccount(QString n,QString p);
 
 signals:
     void disconnected(qintptr);
     void doFlushActivity();
 
+    void loginOk(bool s);
 private slots:
     void dataReceived();
     void slotDisconnected();
+
 private:
     TcpServer* _tcpserver;
 

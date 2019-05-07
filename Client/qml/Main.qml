@@ -18,6 +18,8 @@ App{
 
     }
 
+
+
     property bool userLoggedIn: false
     Logic {
         id: logic
@@ -38,11 +40,16 @@ App{
         opacity: userLoggedIn ? 0 : 1 // hide if user is logged in
         onLoginSucceeded:{
            console.debug("client")
+            //client.login()
            // client.logining(tUsername,tUserPassword)//交互C++，发送name和password
 //            console.debug(client.userName)
 //            console.debug(client.userPassword)
+            if(client.loginok)
+            {
+                userLoggedIn = 1
+            }
 
-            userLoggedIn = 1
+
         }
 
         Behavior on opacity { NumberAnimation { duration: 250 } } // page fade in/out

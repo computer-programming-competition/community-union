@@ -111,10 +111,10 @@ void TcpClientSocket::dataReceived()
             QJsonDocument jsonDocument = QJsonDocument::fromJson(rec.toLocal8Bit().data());
             QJsonObject jsonObject = jsonDocument.object();
 
-//            QString test1 = jsonObject.value("title").toString();
-//            QString test2 = jsonObject.value("time").toString();
-//            QString test3 = jsonObject.value("label").toString();
-//            QString test4 = jsonObject.value("content").toString();
+            //            QString test1 = jsonObject.value("title").toString();
+            //            QString test2 = jsonObject.value("time").toString();
+            //            QString test3 = jsonObject.value("label").toString();
+            //            QString test4 = jsonObject.value("content").toString();
 
             _tcpserver->getDatabase()->activityToDatabase("0",jsonObject.value("title").toString(),jsonObject.value("time").toString(),jsonObject.value("label").toString(),jsonObject.value("content").toString());
 
@@ -124,12 +124,53 @@ void TcpClientSocket::dataReceived()
 
             break;
         }
+
         case FlushActivity:
         {
             clearActiviy();
             emit doFlushActivity();
+            break;
+        }
+        case Login:
+        {
+
+            QString rec;
+            QByteArray datas = m_buffer.mid(2*sizeof(qint64), totalBytes-2*sizeof(qint64));
+            rec.prepend(datas);
+            QJsonDocument jsonDocument = QJsonDocument::fromJson(rec.toLocal8Bit().data());
+            QJsonObject jsonObject = jsonDocument.object();
+            bool success = _tcpserver->getDatabase()->verifyaccout(jsonObject.value("name").toString(),jsonObject.value("password").toString());
+
+
+            QJsonObject yorn;
+
+            QString msg1 = QString::number(success);
+            yorn.insert("yorn",msg1);
+            QString msg=QString(QJsonDocument(yorn).toJson());
+            //构造数据包
+            qint64 totalBytes = 0;
+            QByteArray block;
+            QDataStream output(&block,QIODevice::WriteOnly);
+            output.setVersion(QDataStream::Qt_5_2);
+            totalBytes = msg.toUtf8().size();
+
+
+            //向缓冲区写入文件头
+            output<<qint64(totalBytes)<<qint64(LoginOk);
+            totalBytes += block.size();
+            output.device()->seek(0);
+            output<<totalBytes;
+            write(block);
+            block.resize(0);
+            for(int i=0;i<10000;i++)
+
+            block = msg.toUtf8();
+            write(block);
+            block.resize(0);
+            break;
         }
         }
+
         //缓存多余的数据
         buffer = m_buffer.right(totalLen - totalBytes); //截取下一个数据包的数据，留作下次读取
         totalLen = buffer.size();
@@ -137,6 +178,8 @@ void TcpClientSocket::dataReceived()
         m_buffer = buffer;
     }
 }
+
+
 
 void TcpClientSocket::slotDisconnected()
 {

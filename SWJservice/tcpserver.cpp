@@ -42,6 +42,11 @@ void TcpServer::doFlushActivity()
     }
 }
 
+void TcpServer::loginOk(bool s)
+{
+
+}
+
 void TcpServer::clientConnect()
 {
     std::cout << "connect\n" << std::endl;

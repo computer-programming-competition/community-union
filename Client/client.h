@@ -22,26 +22,34 @@ class Client:public QObject
     Q_OBJECT
     Q_PROPERTY(QString userName READ userName WRITE setUserName NOTIFY userNameChanged)
     Q_PROPERTY(QString userPassword READ userPassword WRITE setUserPassword NOTIFY userPasswordChanged)
+    Q_PROPERTY(bool loginok READ loginok WRITE setLoginok NOTIFY loginokChanged)
 
 public:
     Client();
     Q_INVOKABLE void sendActivity(QString title, QString time, QString label, QString content);
     Q_INVOKABLE void flushActivity();
+    Q_INVOKABLE void login(QString name,QString ps);
+
 //    Q_INVOKABLE void StartConnect();
 //    Q_INVOKABLE void logining(QString name,QString password);
 //    void Readvideo();  //接受服务器的video消息
 //    void ReceiveActivity();    //jie shou lai si fuwuqi de huodong xiaoxi
 //    void sendaccount();
 
+    bool loginok();
+    void setLoginok(bool s);
     //用户帐号
+
     QString userName();
     void setUserName(QString name);
     QString userPassword();
     void setUserPassword(QString password);
 signals:
+    void loginn();
     void userNameChanged();
     void userPasswordChanged();
     void clearActivity();
+    void loginokChanged();
     void releaseActivity(QString title, QString time, QString label, QString content);
 private slots:
     void dataReceived();
