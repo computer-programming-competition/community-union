@@ -76,7 +76,7 @@ void Client::flushActivity()
 
 void Client::login(QString name, QString ps)
 {
-    qDebug() << "lllll";
+  //  qDebug() << "lllll";
     QJsonObject account;
     account.insert("name",name);
     account.insert("password",ps);
@@ -91,6 +91,34 @@ void Client::login(QString name, QString ps)
 
      //向缓冲区写入文件头
      output<<qint64(totalBytes)<<qint64(Login);
+     totalBytes += block.size();
+     output.device()->seek(0);
+     output<<totalBytes;
+     tcpSocket->write(block);
+     block.resize(0);
+     for(int i=0;i<10000;i++)
+
+         block = msg.toUtf8();
+     tcpSocket->write(block);
+     block.resize(0);
+}
+
+void Client::mySignUp(QString name, QString ps)
+{
+    QJsonObject account;
+    account.insert("name",name);
+    account.insert("password",ps);
+     QString msg = QString(QJsonDocument(account).toJson());
+
+     qint64 totalBytes = 0;
+     QByteArray block;
+     QDataStream output(&block,QIODevice::WriteOnly);
+     output.setVersion(QDataStream::Qt_5_2);
+     totalBytes = msg.toUtf8().size();
+
+
+     //向缓冲区写入文件头
+     output<<qint64(totalBytes)<<qint64(SignUp);
      totalBytes += block.size();
      output.device()->seek(0);
      output<<totalBytes;
@@ -203,6 +231,19 @@ void Client::dataReceived()
             m_loginging =  tempValue.toBool();
             emit loginn();
             break;
+        }
+        case SignUpOK:
+        {
+            QString rec;
+            //
+            QByteArray datas = m_buffer.mid(2*sizeof(qint64), totalBytes-2*sizeof(qint64));
+            rec.prepend(datas);
+            //
+
+            QJsonDocument jsonDocument = QJsonDocument::fromJson(rec.toLocal8Bit().data());
+            QJsonObject jsonObject = jsonDocument.object();
+            QString msg = jsonObject.value("yorn").toString();
+            qDebug() <<msg;
         }
         }
         //缓存多余的数据

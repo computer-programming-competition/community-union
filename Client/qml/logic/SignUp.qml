@@ -1,19 +1,10 @@
 import Felgo 3.0
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
-import "logic"
+
 Page {
     id: loginPage
     title: qsTr("Login")
-    signal loginSucceeded
-    property bool userSignUp: true
-    Connections {
-        target: client
-        onLoginn: {
-            //console.log("fds")
-            loginSucceeded()
-        }
-    }
 
     backgroundColor: Qt.rgba(100,100,100) // page background is translucent, we can see other items beneath the page
     useSafeArea: false // do not consider safe area insets of screen
@@ -28,14 +19,6 @@ Page {
         radius: dp(4)
     }
 
-    SignUp{
-        z:1
-        id:mysignup
-        visible: opacity > 0
-        enabled: visible
-        opacity: userSignUp ? 0 : 1
-
-    }
     // login form content
     GridLayout {
         id: content
@@ -81,7 +64,21 @@ Page {
             font.pixelSize: sp(14)
             borderColor: Theme.tintColor
             borderWidth: !Theme.isAndroid ? dp(2) : 0
-            echoMode: TextInput.Password
+           // echoMode: TextInput.Password
+        }
+        AppText {
+            text: qsTr("确认密码")
+            font.pixelSize: sp(12)
+        }
+
+        AppTextField {
+            id: txtPassword2
+            Layout.preferredWidth: dp(200)
+            showClearButton: true
+            font.pixelSize: sp(14)
+            borderColor: Theme.tintColor
+            borderWidth: !Theme.isAndroid ? dp(2) : 0
+           // echoMode: TextInput.Password
         }
 
         // column for buttons, we use column here to avoid additional spacing between buttons
@@ -92,34 +89,28 @@ Page {
 
             // buttons
             AppButton {
-                text: qsTr("Login")
+                text: qsTr("注册")
                 flat: false
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
-                    loginPage.forceActiveFocus() // move focus away from text fields
-                    console.debug("login")
-                    // call login action
-                    client.login(txtUsername.text, txtPassword.text)
 
-//                     loginSucceeded()
-                    client.flushActivity()
+                     console.debug("开始qml注册")
+                    if(txtUsername.text.indexOf(txtPassword2.text))
+                    {
+                        client.mySignUp(txtUsername.text,txtPassword2.text)
+                        console.debug("开始注册")
+
+                    }
+
+
+                  //  loginPage.forceActiveFocus() // move focus away from text fields
+
                 }
             }
 
 
 
-            AppButton {
-                text: qsTr("注册")
-                flat: true
-                anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: {
-                    loginPage.forceActiveFocus() // move focus away from text fields
-                    userSignUp = 0
 
-                    // call your logic action to register here
-                    console.debug("registering...")
-                }
-            }
         }
     }
 }

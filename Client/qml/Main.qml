@@ -55,6 +55,8 @@ App{
         Behavior on opacity { NumberAnimation { duration: 250 } } // page fade in/out
     }
 
+
+
     MainPage{
     }
 

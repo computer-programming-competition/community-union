@@ -169,6 +169,43 @@ void TcpClientSocket::dataReceived()
             block.resize(0);
             break;
         }
+        case SignUp:
+        {
+            qDebug() << "注册开始/n";
+            QString rec;
+            QByteArray datas = m_buffer.mid(2*sizeof(qint64), totalBytes-2*sizeof(qint64));
+            rec.prepend(datas);
+            QJsonDocument jsonDocument = QJsonDocument::fromJson(rec.toLocal8Bit().data());
+            QJsonObject jsonObject = jsonDocument.object();
+            QString signup = _tcpserver->getDatabase()->signupaccount(jsonObject.value("name").toString(),jsonObject.value("password").toString());
+
+            QJsonObject signyorn;
+            signyorn.insert("yorn",signup);
+            QString msg=QString(QJsonDocument(signyorn).toJson());
+            //构造数据包
+            qint64 totalBytes = 0;
+            QByteArray block;
+            QDataStream output(&block,QIODevice::WriteOnly);
+            output.setVersion(QDataStream::Qt_5_2);
+            totalBytes = msg.toUtf8().size();
+
+
+            //向缓冲区写入文件头
+            output<<qint64(totalBytes)<<qint64(SignUpOK);
+            totalBytes += block.size();
+            output.device()->seek(0);
+            output<<totalBytes;
+            write(block);
+            block.resize(0);
+            for(int i=0;i<10000;i++)
+
+            block = msg.toUtf8();
+            write(block);
+            block.resize(0);
+            break;
+
+
+        }
         }
 
         //缓存多余的数据

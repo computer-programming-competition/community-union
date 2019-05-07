@@ -93,6 +93,7 @@ DISTFILES += \
     qml/model/DataModel.qml \
     qml/UserPageTwo.qml \
     qml/Organization/CommunityList.qml \
-    qml/ActivityMessage.qml
+    qml/ActivityMessage.qml \
+    qml/logic/SignUp.qml
 
 

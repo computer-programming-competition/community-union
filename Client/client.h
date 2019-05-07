@@ -29,6 +29,7 @@ public:
     Q_INVOKABLE void sendActivity(QString title, QString time, QString label, QString content);
     Q_INVOKABLE void flushActivity();
     Q_INVOKABLE void login(QString name,QString ps);
+    Q_INVOKABLE void mySignUp(QString name,QString ps);
 
 //    Q_INVOKABLE void StartConnect();
 //    Q_INVOKABLE void logining(QString name,QString password);

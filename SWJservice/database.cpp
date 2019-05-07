@@ -33,7 +33,7 @@ void database::startconnect()
     hostName = "127.0.0.1";   // 主机名
     dbName = "SWJsql";   // 数据库名称
     userName = "root";   // 用户名
-    password = "42584693";   // 密码
+    password = "root";   // 密码
     dbconn = QSqlDatabase::addDatabase("QMYSQL");
     dbconn.setHostName(hostName);
     dbconn.setDatabaseName(dbName);
@@ -47,8 +47,9 @@ void database::startconnect()
 void database::createtable()
 {
     QSqlQuery query;
-    bool success=query.exec("CREATE TABLE account (username VARCHAR(10) NOT NULL PRIMARY, Password VARCHAR(10) NOT NULL,community varchar(20))");
-   // query.exec("insert into account values('jiangfuhao', '666666', 'basketball')");
+    bool success=query.exec("CREATE TABLE account (username VARCHAR(10) NOT NULL, Password VARCHAR(10) NOT NULL,community varchar(20), PRIMARY KEY (username))");
+    //QString s =             "CREATE TABLE activity (username varchar(20), title varchar(20), time varchar(20), label varchar(10), content varchar(100))";
+    query.exec("insert into account values('jiangfuhao', '666666', 'basketball')");
     if(success)
         qDebug()<<QObject::tr("数据库表创建成功！\n");
     else
@@ -85,22 +86,39 @@ bool database::verifyaccout(QString name, QString password)
 
 
         return true;
+    }else
+    {
+        return false;
+    }
+
+}
+
+QString database::signupaccount(QString name, QString password)
+{
+    QSqlQuery query;
+    QString s = "select * from account where username='"+name+"' and Password='"+password+"'";
+    qDebug() << s;
+    bool success = query.exec(s);
+    QSqlRecord rec = query.record();
+    if(query.next())
+    {
+        return "账户存在";
     }
     else
     {
-        qDebug()<<QObject::tr("失败！\n");
-        s = "insert into account values('" + name +"','"+password+"')";
+        //qDebug()<<QObject::tr("失败！\n");
+        s = "insert into account values('" + name +"','"+password+"','')";
          qDebug() <<s;
         bool su = query.exec(s);
         if(su)
         {
             qDebug()<<QObject::tr("insert account成功！\n");
-            return true;
+            return "sign up succes";
         }
         else
         {
             qDebug()<<QObject::tr("inster account失败！\n");
-            return false;
+            return "sign up losed";
         }
     }
 }
