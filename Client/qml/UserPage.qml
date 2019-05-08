@@ -2,9 +2,10 @@ import QtQuick 2.0
 import VPlayApps 1.0
 import VPlay 2.0
 import user 1.0
-import "Organization"
+import "./Organization"
 Page {
     id:userpage
+    title: "我的"
     anchors.fill: parent
     property bool bMenuShown:false //侧边栏
     property Component settingsPage: ListPage {
@@ -24,11 +25,9 @@ Page {
 
     }
 
-
-
     Component{
-        id:ac
-        ActivityPage{
+        id:myCommunity
+        MyCommunity{
 
         }
 
@@ -43,9 +42,11 @@ Page {
             onSettingMenu();
         }
     }
-    Component {
-        id: memberlist
-        MemberList {}
+    Component{
+        id:certification
+        Certification{
+
+        }
     }
 
 
@@ -189,7 +190,7 @@ Page {
                         //        anchors.bottomMargin: 30
 
                         onClicked: {
-                            userpage.navigationStack.push(ac,{})
+                            userpage.navigationStack.push(myCommunity)
                         }
                     }
                     AppButton {
@@ -211,7 +212,7 @@ Page {
                     AppButton {
                         id: button3
                         z:2
-                        text: "社团管理"
+                        text: "管理员认证"
                         flat: false
                         radius: 90
 
@@ -220,7 +221,7 @@ Page {
                         //        anchors.bottomMargin: 30
 
                         onClicked: {
-                            userpage.navigationStack.push(memberlist)
+                            userpage.navigationStack.push(certification)
                         }
 
                 }

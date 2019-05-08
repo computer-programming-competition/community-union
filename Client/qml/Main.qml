@@ -7,6 +7,7 @@ import "logic"
 import "model"
 //import "Custom suite"
 import "Organization"
+
 App{
     onInitTheme: {
         Theme.platform = "andriod"
@@ -14,16 +15,14 @@ App{
     //property bool NetState: false
     Client{
         id:client
-
-
     }
-
 
 
     property bool userLoggedIn: false
     Logic {
         id: logic
     }
+
     DataModel {
         id: dataModel
         dispatcher: logic // data model handles actions sent by logic
@@ -55,9 +54,8 @@ App{
         Behavior on opacity { NumberAnimation { duration: 250 } } // page fade in/out
     }
 
+   MainPage{
 
-
-    MainPage{
-    }
+   }
 
 }

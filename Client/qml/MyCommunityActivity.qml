@@ -6,6 +6,19 @@ import community 1.0
 Page {
     id:activityPage
     property int number:0
+    Component{
+        id:memberlist
+        MemberList{
+
+        }
+    }
+
+    rightBarItem: IconButtonBarItem {
+        icon: IconType.list //列表
+        onClicked:{
+          activityPage.navigationStack.push(memberlist)
+        }
+    }
     Rectangle{
         id:introduction
         width: parent.width-dp(10)
@@ -81,23 +94,23 @@ Page {
             }
         }
     }
-    AppButton{
-        id:joinOrganization
-        z:1
-        width: dp(50)
-        height: dp(20)
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: dp(20)
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr("加入我们")
-        textSize: sp(15)
-        onClicked: {
+//    AppButton{
+//        id:joinOrganization
+//        z:1
+//        width: dp(50)
+//        height: dp(20)
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: dp(20)
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        text: qsTr("加入我们")
+//        textSize: sp(15)
+//        onClicked: {
 
-            user.setCommunity("篮球社")
-            console.debug("我的社团：",user.community)
-            joinOrganization.backgroundColor = "lightgray"
+//            user.setCommunity("篮球社")
+//            console.debug("我的社团：",user.community)
+//            joinOrganization.backgroundColor = "lightgray"
 
-        }
+//        }
 
-    }
+//    }
 }

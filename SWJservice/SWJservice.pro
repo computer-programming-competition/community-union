@@ -65,3 +65,5 @@ HEADERS += \
     tcpserver.h \
     tcpclientsocket.h \
     cmd.h
+
+DISTFILES +=

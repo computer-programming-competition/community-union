@@ -6,6 +6,7 @@ import community 1.0
 import "model"
 import client 1.0
 import "logic"
+
 Page {
     id:mainpage
     User{

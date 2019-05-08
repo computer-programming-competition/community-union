@@ -94,6 +94,12 @@ DISTFILES += \
     qml/UserPageTwo.qml \
     qml/Organization/CommunityList.qml \
     qml/ActivityMessage.qml \
-    qml/logic/SignUp.qml
+    qml/logic/SignUp.qml \
+    qml/MyCommunity.qml \
+    qml/Certification.qml \
+    qml/MyCommunityActivity.qml \
+    qml/code-admob.png \
+    qml/logo-admob.png \
+    qml/MemberList.qml
 
 

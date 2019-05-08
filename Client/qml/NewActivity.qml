@@ -5,6 +5,7 @@ import QtQuick 2.0
 import QtMultimedia 5.0
 
 Page {
+    title:"发布活动"
     Rectangle {
         id: rectangleTop
         width: parent.width
@@ -14,10 +15,10 @@ Page {
             anchors.fill: parent
             clip: true
 
-//            Quick2.Label {
-//                      text: "ABC"
-//                      font.pixelSize: 600
-//            }
+            //            Quick2.Label {
+            //                      text: "ABC"
+            //                      font.pixelSize: 600
+            //            }
             Column{
                 AppText {
                     id: id
@@ -75,33 +76,57 @@ Page {
                     text: "主要内容"
                 }
 
-                ScrollViewVPlay {
-                    width: 300
-                    height: 200
-                    x: 20
-                    y: 270
-                    Quick2.TextArea {
-                        id: contentTextEdit
-                        text: "fasfasdfasdfasfsdfadsf"
+//                ScrollViewVPlay {
+//                    width: 300
+//                    height: 200
+//                    x: 20
+//                    y: 270
+                    Rectangle{
+                        width: 300
+                        height: 130
+//                        anchors.fill: parent
+                        x:20
+                        y:270
+                        border.width: 0.5
+                        border.color: "gray"
+                        TextEdit {
+                            id: contentTextEdit
+                            width: parent.width
+                            height: parent.height
+                            anchors.fill: parent
+                            selectByMouse: true
+                            focus: false
+                            wrapMode: TextEdit.Wrap
+                            text: "请输入内容"
+                            opacity: 0.5
+//                            cursorPosition: 5
+                            onFocusChanged: {
+                                if(focus == true){
+                                    text = ""
+                                    opacity = 1
+//                                    activeFocusOnPress = true
+                                }
+                            }
+                        }
                     }
-                }
+//                }
             }
 
-//            Rectangle {
-//                x: 20
-//                y: 270
-//                color: "red"
-//                width: parent.width * 0.6
-//                height: 200
-//                border.width: 1
-//                Quick2.ScrollView {
-//                    anchors.fill: parent
-//                    Quick2.TextArea {
-//                        id: contentTextEdit
-//                        text: "fasfasdfasdfasfsdfadsf"
-//                    }
-//                }
-//            }
+            //            Rectangle {
+            //                x: 20
+            //                y: 270
+            //                color: "red"
+            //                width: parent.width * 0.6
+            //                height: 200
+            //                border.width: 1
+            //                Quick2.ScrollView {
+            //                    anchors.fill: parent
+            //                    Quick2.TextArea {
+            //                        id: contentTextEdit
+            //                        text: "fasfasdfasdfasfsdfadsf"
+            //                    }
+            //                }
+            //            }
         }
     }
 
@@ -119,15 +144,15 @@ Page {
             radius: 90
 
             anchors.horizontalCenter: parent.horizontalCenter
-//            anchors.bottom: parent.bottom
-//            anchors.bottomMargin: 30
+            //            anchors.bottom: parent.bottom
+            //            anchors.bottomMargin: 30
 
             onClicked: {
-//                activity1_0.title = titleTextEdit.text
-//                activity1_0.time = timeTextEdit.text
-//                activity1_0.label = labelTextEdit.text
-//                activity1_0.content = contentTextEdit.text
-//                activity1_0.setNewActivity(titleTextEdit.text, timeTextEdit.text, labelTextEdit.text, contentTextEdit.text)
+                //                activity1_0.title = titleTextEdit.text
+                //                activity1_0.time = timeTextEdit.text
+                //                activity1_0.label = labelTextEdit.text
+                //                activity1_0.content = contentTextEdit.text
+                //                activity1_0.setNewActivity(titleTextEdit.text, timeTextEdit.text, labelTextEdit.text, contentTextEdit.text)
                 client.sendActivity(titleTextEdit.text, timeTextEdit.text, labelTextEdit.text, contentTextEdit.text)
             }
         }

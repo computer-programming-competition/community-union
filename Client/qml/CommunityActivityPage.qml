@@ -26,31 +26,31 @@ Page {
             listMo.clear()
         }
     }
-    Component {
-        id: newActivityComponent
-        NewActivity {}
-    }
+//    Component {
+//        id: newActivityComponent
+//        NewActivity {}
+//    }
 
     Component {
         id: activityMessageCom
         ActivityMessage {}
     }
 
-    AppButton {
-        id: button
-        z:2
-        text: "+活动"
-        flat: false
-        radius: 90
+//    AppButton {
+//        id: button
+//        z:2
+//        text: "+活动"
+//        flat: false
+//        radius: 90
 
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: 30
 
-        onClicked: {
-            page.navigationStack.push(newActivityComponent)
-        }
-    }
+//        onClicked: {
+//            page.navigationStack.push(newActivityComponent)
+//        }
+//    }
 
     Loader {
         id: newActivityLoader
@@ -82,7 +82,15 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
                 anchors.topMargin: 10
-                color: "blue"
+//                color: "blue"
+                Image {
+                                    id: activityimage
+                                    width: parent.width
+                                    height: parent.height
+                                    anchors.left: parent.left
+                                    anchors.top: parent.top
+                                    source: "../qml/Image/chongshitushuguan.jpg"
+                                }
 
                 MouseArea {
                     anchors.fill: parent

@@ -5,6 +5,7 @@ import QtQuick 2.0
 import QtMultimedia 5.0
 
 Page {
+    title: "活动详情"
     property string time_text_text
     property string title_text_text
     property string label_text_text
@@ -14,7 +15,15 @@ Page {
         id: image
         width: parent.width
         height: parent.width * 0.48
-        color: "green"
+//        color: "blue"
+        Image {
+            id: activityimage
+            width: parent.width
+            height: parent.height
+            anchors.left: parent.left
+            anchors.top: parent.top
+            source: "../qml/Image/chongshitushuguan.jpg"
+        }
 //        MouseArea {
 //            anchors.fill: parent
 //            onClicked: {
