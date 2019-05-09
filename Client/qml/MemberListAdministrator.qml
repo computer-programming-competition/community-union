@@ -1,9 +1,12 @@
+//guchangrong
+//管理员页面，显示社团列表和发布活动
 import VPlayApps 1.0
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import ".."
 Page {
     id:memberlist
+    title: "管理员页面"
 
     Component {
         id: newActivityComponent
@@ -48,7 +51,7 @@ Page {
             Text {
                 id: name1
                 anchors.verticalCenter: parent.verticalCenter
-                text: qsTr("社长   张三")
+                text: qsTr("社长   张三    10")
             }
         }
         Rectangle{
@@ -64,7 +67,7 @@ Page {
             Text {
                 id: name2
                 anchors.verticalCenter: parent.verticalCenter
-                text: qsTr("副社长  王梅")
+                text: qsTr("副社长  王梅    9")
             }
         }
    }

@@ -8,6 +8,7 @@ import "model"
 import user 1.0
 //import "Custom suite"
 import "Organization"
+
 App{
     onInitTheme: {
         Theme.platform = "andriod"
@@ -15,22 +16,22 @@ App{
     //property bool NetState: false
     Client{
         id:client
-
-
     }
+
 
 
     User{
         id:user
-        name:"蒋富豪"
-        personalS: "个性签名:"
+
 
     }
+
 
     property bool userLoggedIn: false
     Logic {
         id: logic
     }
+
     DataModel {
         id: dataModel
         dispatcher: logic // data model handles actions sent by logic
@@ -62,9 +63,8 @@ App{
         Behavior on opacity { NumberAnimation { duration: 250 } } // page fade in/out
     }
 
+   MainPage{
 
-
-    MainPage{
-    }
+   }
 
 }

@@ -65,5 +65,11 @@ HEADERS += \
     newactivity.h \
     tcpserver.h \
     tcpclientsocket.h \
+    user.h\
+
     cmd.h \
-    user.h
+
+
+
+DISTFILES +=
+
