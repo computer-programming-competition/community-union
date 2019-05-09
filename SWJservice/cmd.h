@@ -6,7 +6,8 @@
 #define     Clear_activity         0x0F02   //
 #define     LoginOk                0x0F03
 #define     SignUpOK               0x0F04
-#define     PostActivityOK         0x0F05 //发布活动认证
+#define     PostActivityOK     0x0F05 //发布活动认证
+#define     EnterComunityOK      0x0F06//加入社团
 //#define     QFile_send             0x0F03   //发送文件
 //#define     Struct_send            0x0F03   //发送结构体
 //#define     Register_answer        0x0F04   //注册结果
@@ -19,6 +20,7 @@
 #define     Login                  0x0D03
 #define     SignUp                 0x0D04   //注册信号
 #define     PostActivity           0x0D05 //发布活动认证
+#define     EnterComunity      0x0F06//加入社团
 //#define     Msg                    0x0D03   //客户端发送聊天信息
 //#define     Connet_Success         0x0D04   //连接成功应答包
 

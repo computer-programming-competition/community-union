@@ -83,6 +83,7 @@ Page {
             id:joinin
             width: dp(50)
             height: dp(20)
+            radius: 90
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
             anchors.horizontalCenter: parent.horizontalCenter

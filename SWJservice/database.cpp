@@ -33,7 +33,7 @@ void database::startconnect()
     hostName = "127.0.0.1";   // 主机名
     dbName = "SWJsql";   // 数据库名称
     userName = "root";   // 用户名
-    password = "42584693";   // 密码
+    password = "root";   // 密码
     dbconn = QSqlDatabase::addDatabase("QMYSQL");
     dbconn.setHostName(hostName);
     dbconn.setDatabaseName(dbName);
@@ -68,6 +68,20 @@ void database::createActivityTable()
         qDebug()<<QObject::tr("数据库huodong表创建成功！\n");
     else
         qDebug()<<QObject::tr("数据库huodong表创建失败！\n");
+}
+
+bool database::joinCommunity(QString c,QString n)
+{
+    QString j = "update community set community = '"+c+"' where username = '"+n+"'";
+    QSqlQuery query;
+    bool s = query.exec(j);
+    if(s)
+    {
+        return true;
+    }else
+    {
+        return false;
+    }
 }
 
 void database::getUserInformation(QString name)

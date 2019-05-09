@@ -3,6 +3,7 @@ import VPlayApps 1.0
 import QtQuick 2.0
 import user 1.0
 import community 1.0
+import ".."
 Page {
     id:activityPage
     property int number:0
@@ -70,6 +71,7 @@ Page {
             id:joinin
             width: dp(50)
             height: dp(20)
+            radius: 90
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
             anchors.horizontalCenter: parent.horizontalCenter
@@ -86,6 +88,7 @@ Page {
         z:1
         width: dp(50)
         height: dp(20)
+        radius: 90
         anchors.bottom: parent.bottom
         anchors.bottomMargin: dp(20)
         anchors.horizontalCenter: parent.horizontalCenter
@@ -94,6 +97,8 @@ Page {
         onClicked: {
 
             user.setCommunity("篮球社")
+
+            client.enterCommunity("basketball",user.name)
             console.debug("我的社团：",user.community)
             joinOrganization.backgroundColor = "lightgray"
 

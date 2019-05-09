@@ -170,6 +170,21 @@ Page {
             anchors.topMargin: 10
             anchors.left: labelLabel.left
         }
+        AppButton {
+            id: button
+            z:2
+            text: "参与"
+            flat: false
+            radius: 90
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 30
+
+            onClicked: {
+                button.backgroundColor = "lightgray"
+            }
+        }
 //        Quick2.ScrollView {
 //            id: scrollView
 //            anchors.fill: parent

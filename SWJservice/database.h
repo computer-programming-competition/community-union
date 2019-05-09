@@ -21,6 +21,7 @@ public:
     void createtable();
     void createActivityTable();        //chuang jian huo dong biao
     void insertvideo();
+    bool joinCommunity(QString c,QString n);
 
     void getUserInformation(QString name);
     void getCommunityInformation(int id);
