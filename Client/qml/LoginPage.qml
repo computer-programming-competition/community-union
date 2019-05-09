@@ -12,6 +12,8 @@ Page {
         onLoginn: {
             //console.log("fds")
             loginSucceeded()
+            user.setName(n)
+            user.setCommunity(com)
         }
     }
 
@@ -30,10 +32,8 @@ Page {
 
     SignUp{
         z:1
-        id:mysignup
-        visible: opacity > 0
-        enabled: visible
-        opacity: userSignUp ? 0 : 1
+        id:signPage
+        visible: false
 
     }
     // login form content
@@ -114,7 +114,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     loginPage.forceActiveFocus() // move focus away from text fields
-                    userSignUp = 0
+                    signPage.visible= true
 
                     // call your logic action to register here
                     console.debug("registering...")

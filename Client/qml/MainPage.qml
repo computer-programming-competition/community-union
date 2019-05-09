@@ -8,12 +8,7 @@ import client 1.0
 import "logic"
 Page {
     id:mainpage
-    User{
-        id:user
-        name:"蒋富豪"
-        personalS: "个性签名:"
 
-    }
 
     CommunityItem{
         id:communityitem

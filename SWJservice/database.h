@@ -12,7 +12,7 @@
 #include <QSqlRecord>
 #include <string>
 #include "activity.h"
-
+#include "user.h"
 class database
 {
 public:
@@ -21,6 +21,9 @@ public:
     void createtable();
     void createActivityTable();        //chuang jian huo dong biao
     void insertvideo();
+
+    void getUserInformation(QString name);
+    void getCommunityInformation(int id);
 //    void insertActivity(QString username, QString title, QString time, QString label, QString content);                              //cha ru yi ge xin de huo dong
 
     bool verifyaccout(QString name,QString password);
@@ -32,16 +35,18 @@ public:
     }
 
     //xie ru shu ju ku
-    void activityToDatabase(QString username, QString title, QString time, QString label, QString content);
+    void activityToDatabase(QString cname, QString title, QString time, QString label, QString content);
 
     //
     void setActivity();    
     Activity* activity();
 
+    user* myuser();
 private:
     QSqlDatabase dbconn;
     std::vector<QString> namelist;
     Activity* _activity;
+    user* _user;
 };
 
 #endif // DATABASE_H

@@ -128,7 +128,8 @@ Page {
 //                activity1_0.label = labelTextEdit.text
 //                activity1_0.content = contentTextEdit.text
 //                activity1_0.setNewActivity(titleTextEdit.text, timeTextEdit.text, labelTextEdit.text, contentTextEdit.text)
-                client.sendActivity(titleTextEdit.text, timeTextEdit.text, labelTextEdit.text, contentTextEdit.text)
+                client.sendActivity(user.community,user.name,titleTextEdit.text, timeTextEdit.text, labelTextEdit.text, contentTextEdit.text)
+
             }
         }
     }

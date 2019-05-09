@@ -26,7 +26,7 @@ class Client:public QObject
 
 public:
     Client();
-    Q_INVOKABLE void sendActivity(QString title, QString time, QString label, QString content);
+    Q_INVOKABLE void sendActivity(QString cname,QString uname,QString title, QString time, QString label, QString content);
     Q_INVOKABLE void flushActivity();
     Q_INVOKABLE void login(QString name,QString ps);
     Q_INVOKABLE void mySignUp(QString name,QString ps);
@@ -46,7 +46,7 @@ public:
     QString userPassword();
     void setUserPassword(QString password);
 signals:
-    void loginn();
+    void loginn(QString n,QString com);
     void userNameChanged();
     void userPasswordChanged();
     void clearActivity();

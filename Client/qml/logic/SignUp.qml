@@ -3,7 +3,7 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.1
 
 Page {
-    id: loginPage
+    id: signPage
     title: qsTr("Login")
 
     backgroundColor: Qt.rgba(100,100,100) // page background is translucent, we can see other items beneath the page
@@ -103,6 +103,21 @@ Page {
                     }
 
 
+                  //  loginPage.forceActiveFocus() // move focus away from text fields
+
+                }
+            }
+            AppButton {
+                text: qsTr("返回登录")
+                flat: false
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked: {
+
+                    signPage.visible = false
+
+                    txtPassword.text = ''
+                    txtPassword2.text= ''
+                    txtUsername.text = ''
                   //  loginPage.forceActiveFocus() // move focus away from text fields
 
                 }

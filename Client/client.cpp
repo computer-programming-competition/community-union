@@ -16,9 +16,12 @@ Client::Client()
     connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(dataReceived()));
 }
 
-void Client::sendActivity(QString title, QString time, QString label, QString content)
+void Client::sendActivity(QString cname,QString uname,QString title, QString time, QString label, QString content)
 {
     QJsonObject activityList;
+    qDebug() << cname;
+    activityList.insert("cname",cname);
+    activityList.insert("username",uname);
     activityList.insert("title", title);
     activityList.insert("time", time);
     activityList.insert("label", label);
@@ -229,7 +232,12 @@ void Client::dataReceived()
             QJsonObject jsonObject = jsonDocument.object();
             QVariant tempValue=jsonObject.value("yorn").toString();
             m_loginging =  tempValue.toBool();
-            emit loginn();
+            qDebug() << "community"+jsonObject.value("community").toString();
+            if(m_loginging)
+            {
+                  emit loginn(jsonObject.value("name").toString(),jsonObject.value("community").toString());
+            }
+
             break;
         }
         case SignUpOK:

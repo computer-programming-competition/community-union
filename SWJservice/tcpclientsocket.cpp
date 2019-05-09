@@ -116,8 +116,9 @@ void TcpClientSocket::dataReceived()
             //            QString test3 = jsonObject.value("label").toString();
             //            QString test4 = jsonObject.value("content").toString();
 
-            _tcpserver->getDatabase()->activityToDatabase("0",jsonObject.value("title").toString(),jsonObject.value("time").toString(),jsonObject.value("label").toString(),jsonObject.value("content").toString());
+            _tcpserver->getDatabase()->activityToDatabase(jsonObject.value("cname").toString(),jsonObject.value("title").toString(),jsonObject.value("time").toString(),jsonObject.value("label").toString(),jsonObject.value("content").toString());
 
+            qDebug() << jsonObject.value("cname").toString();
             clearActiviy();
             emit doFlushActivity();
 
@@ -140,34 +141,69 @@ void TcpClientSocket::dataReceived()
             QJsonDocument jsonDocument = QJsonDocument::fromJson(rec.toLocal8Bit().data());
             QJsonObject jsonObject = jsonDocument.object();
             bool success = _tcpserver->getDatabase()->verifyaccout(jsonObject.value("name").toString(),jsonObject.value("password").toString());
+            if(!success)
+            {
+                //返回登录失败
+                QJsonObject yorn;
+
+                QString msg1 = QString::number(success);
+                yorn.insert("yorn",msg1);
+                QString msg=QString(QJsonDocument(yorn).toJson());
+                //构造数据包
+                qint64 totalBytes = 0;
+                QByteArray block;
+                QDataStream output(&block,QIODevice::WriteOnly);
+                output.setVersion(QDataStream::Qt_5_2);
+                totalBytes = msg.toUtf8().size();
 
 
-            QJsonObject yorn;
+                //向缓冲区写入文件头
+                output<<qint64(totalBytes)<<qint64(LoginOk);
+                totalBytes += block.size();
+                output.device()->seek(0);
+                output<<totalBytes;
+                write(block);
+                block.resize(0);
+                for(int i=0;i<10000;i++)
 
-            QString msg1 = QString::number(success);
-            yorn.insert("yorn",msg1);
-            QString msg=QString(QJsonDocument(yorn).toJson());
-            //构造数据包
-            qint64 totalBytes = 0;
-            QByteArray block;
-            QDataStream output(&block,QIODevice::WriteOnly);
-            output.setVersion(QDataStream::Qt_5_2);
-            totalBytes = msg.toUtf8().size();
+                block = msg.toUtf8();
+                write(block);
+                block.resize(0);
+                break;
+            }else{
+                //返回登录成功并传回用户信息
+
+                QJsonObject yorn;
+                QString msg1 = QString::number(success);
+                yorn.insert("yorn",msg1);
+                yorn.insert("name",_tcpserver->getDatabase()->myuser()->name());
+                yorn.insert("community",_tcpserver->getDatabase()->myuser()->community());
+
+                QString msg=QString(QJsonDocument(yorn).toJson());
+                //构造数据包
+                qint64 totalBytes = 0;
+                QByteArray block;
+                QDataStream output(&block,QIODevice::WriteOnly);
+                output.setVersion(QDataStream::Qt_5_2);
+                totalBytes = msg.toUtf8().size();
 
 
-            //向缓冲区写入文件头
-            output<<qint64(totalBytes)<<qint64(LoginOk);
-            totalBytes += block.size();
-            output.device()->seek(0);
-            output<<totalBytes;
-            write(block);
-            block.resize(0);
-            for(int i=0;i<10000;i++)
+                //向缓冲区写入文件头
+                output<<qint64(totalBytes)<<qint64(LoginOk);
+                totalBytes += block.size();
+                output.device()->seek(0);
+                output<<totalBytes;
+                write(block);
+                block.resize(0);
+                for(int i=0;i<10000;i++)
 
-            block = msg.toUtf8();
-            write(block);
-            block.resize(0);
-            break;
+                block = msg.toUtf8();
+                write(block);
+                block.resize(0);
+                break;
+            }
+
+
         }
         case SignUp:
         {

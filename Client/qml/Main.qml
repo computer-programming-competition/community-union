@@ -5,6 +5,7 @@ import Felgo 3.0
 import client 1.0
 import "logic"
 import "model"
+import user 1.0
 //import "Custom suite"
 import "Organization"
 App{
@@ -19,6 +20,12 @@ App{
     }
 
 
+    User{
+        id:user
+        name:"蒋富豪"
+        personalS: "个性签名:"
+
+    }
 
     property bool userLoggedIn: false
     Logic {

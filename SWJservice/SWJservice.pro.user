@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.7.0, 2019-05-01T18:39:49. -->
+<!-- Written by QtCreator 4.7.0, 2019-05-07T17:21:43. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -62,8 +62,8 @@
  <data>
   <variable>ProjectExplorer.Project.Target.0</variable>
   <valuemap type="QVariantMap">
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">V-Play Desktop (Qt 5.11.1 GCC)</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">V-Play Desktop (Qt 5.11.1 GCC)</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Felgo Desktop (Qt 5.11.1 GCC)</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Felgo Desktop (Qt 5.11.1 GCC)</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">vplayengine.2.qt.gcc_64_kit</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
@@ -306,8 +306,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">SWJservice</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/du/SWJservice/SWJservice.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">SWJservice2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/root/community-union/SWJservice/SWJservice.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">SWJservice.pro</value>
