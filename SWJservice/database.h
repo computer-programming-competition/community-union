@@ -24,10 +24,12 @@ public:
 
     void getUserInformation(QString name);
     void getCommunityInformation(int id);
+    void getActivityMember(int id);
 //    void insertActivity(QString username, QString title, QString time, QString label, QString content);                              //cha ru yi ge xin de huo dong
 
     bool verifyaccout(QString name,QString password);
     QString signupaccount(QString name,QString password);
+    QString PostActivityVerify(QString id,QString name);
 
 
     ~database(){

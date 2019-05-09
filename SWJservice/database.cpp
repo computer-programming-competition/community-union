@@ -80,6 +80,17 @@ void database::getCommunityInformation(int id)
 
 }
 
+void database::getActivityMember(int id)
+{
+    QSqlQuery query;
+    query.exec("select * from account_activity where activityid = 1");
+    while(query.next())
+    {
+
+    }
+
+}
+
 
 bool database::verifyaccout(QString name, QString password)
 {
@@ -142,8 +153,22 @@ QString database::signupaccount(QString name, QString password)
     }
 }
 
-
-
+QString database::PostActivityVerify(QString id, QString name)
+{
+    QSqlQuery query;
+    QString s = "select * from community where id='"+id+"' and name='"+name+"'";
+    qDebug() << s;
+     query.exec(s);
+    QSqlRecord rec = query.record();
+    if(query.next())
+    {
+        return "true";
+    }
+    else
+    {
+       return "false";
+    }
+}
 
 void database::activityToDatabase(QString cname, QString title, QString time, QString label, QString content)
 {

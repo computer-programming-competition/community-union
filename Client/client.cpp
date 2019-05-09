@@ -134,9 +134,49 @@ void Client::mySignUp(QString name, QString ps)
      block.resize(0);
 }
 
+void Client::postactivity(QString cid, QString cn)
+{
+    QJsonObject account;
+    account.insert("id",cid);
+    account.insert("name",cn);
+     QString msg = QString(QJsonDocument(account).toJson());
+
+     qint64 totalBytes = 0;
+     QByteArray block;
+     QDataStream output(&block,QIODevice::WriteOnly);
+     output.setVersion(QDataStream::Qt_5_2);
+     totalBytes = msg.toUtf8().size();
+
+
+     //向缓冲区写入文件头
+     output<<qint64(totalBytes)<<qint64(PostActivity);
+     totalBytes += block.size();
+     output.device()->seek(0);
+     output<<totalBytes;
+     tcpSocket->write(block);
+     block.resize(0);
+     for(int i=0;i<10000;i++)
+
+         block = msg.toUtf8();
+     tcpSocket->write(block);
+     block.resize(0);
+}
+
 bool Client::loginok()
 {
     return m_loginging;
+}
+
+bool Client::verifyPost()
+{
+
+    return m_verifyPostAccount;
+
+}
+
+void Client::setVerifyPost(bool s)
+{
+   m_verifyPostAccount = s;
 }
 
 void Client::setLoginok(bool s)
@@ -252,6 +292,32 @@ void Client::dataReceived()
             QJsonObject jsonObject = jsonDocument.object();
             QString msg = jsonObject.value("yorn").toString();
             qDebug() <<msg;
+            break;
+        }
+        case PostActivityOK:
+        {
+            QString rec;
+            //
+            QByteArray datas = m_buffer.mid(2*sizeof(qint64), totalBytes-2*sizeof(qint64));
+            rec.prepend(datas);
+            //
+
+            QJsonDocument jsonDocument = QJsonDocument::fromJson(rec.toLocal8Bit().data());
+            QJsonObject jsonObject = jsonDocument.object();
+           // QVariant tempValue = jsonObject.value("yorn").toString();
+            QString m = jsonObject.value("yorn").toString();
+            qDebug() << "m = "+m;
+            if(m == "true")
+            {
+
+                m_verifyPostAccount = true;
+                qDebug() << "m = 11"+verifyPost();
+            }else
+            {
+                qDebug() << "m = 22"+verifyPost();
+                m_verifyPostAccount=false;
+            }
+            break;
         }
         }
         //缓存多余的数据
@@ -266,6 +332,8 @@ void Client::sureConnected()
 {
     qDebug() << "have connected";
 }
+
+
 
 void Client::tcpConnected()
 {

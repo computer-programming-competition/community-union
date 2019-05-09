@@ -37,7 +37,8 @@ SOURCES += main.cpp \
     newactivity.cpp \
     tcpserver.cpp \
     tcpclientsocket.cpp \
-    user.cpp
+    user.cpp \
+    newuser.cpp
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
@@ -66,6 +67,8 @@ HEADERS += \
     tcpserver.h \
     tcpclientsocket.h \
     user.h\
+    newuser.h \
+    cmd.h
 
     cmd.h \
 

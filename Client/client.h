@@ -23,6 +23,7 @@ class Client:public QObject
     Q_PROPERTY(QString userName READ userName WRITE setUserName NOTIFY userNameChanged)
     Q_PROPERTY(QString userPassword READ userPassword WRITE setUserPassword NOTIFY userPasswordChanged)
     Q_PROPERTY(bool loginok READ loginok WRITE setLoginok NOTIFY loginokChanged)
+    Q_PROPERTY(bool verifyPost READ verifyPost WRITE setVerifyPost NOTIFY verifyPostChanged)
 
 public:
     Client();
@@ -30,6 +31,7 @@ public:
     Q_INVOKABLE void flushActivity();
     Q_INVOKABLE void login(QString name,QString ps);
     Q_INVOKABLE void mySignUp(QString name,QString ps);
+    Q_INVOKABLE void postactivity(QString cid,QString cn);
 
 //    Q_INVOKABLE void StartConnect();
 //    Q_INVOKABLE void logining(QString name,QString password);
@@ -39,14 +41,20 @@ public:
 
     bool loginok();
     void setLoginok(bool s);
+    bool verifyPost();
+    void setVerifyPost(bool s);
     //用户帐号
 
     QString userName();
     void setUserName(QString name);
     QString userPassword();
     void setUserPassword(QString password);
+
+
 signals:
     void loginn(QString n,QString com);
+
+    void verifyPostChanged();
     void userNameChanged();
     void userPasswordChanged();
     void clearActivity();
@@ -60,6 +68,7 @@ private:
     QString m_userName;
     QString m_userPassword;
     bool m_loginging = false;
+    bool m_verifyPostAccount=false;
     QList<QString> _namelist;
 
     QHostAddress *serverIP;

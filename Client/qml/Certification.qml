@@ -68,7 +68,16 @@ Page {
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
-                    certification.navigationStack.push(memberlist)
+                    client.postactivity(idwrite.text,titleTextEdit.text)
+
+
+                    if(client.verifyPost)
+                    {
+                        certification.navigationStack.push(memberlist)
+                    }else
+                    {
+                        console.debug("认证失败")
+                    }
                 }
             }
         }

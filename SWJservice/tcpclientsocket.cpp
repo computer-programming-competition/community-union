@@ -242,7 +242,43 @@ void TcpClientSocket::dataReceived()
 
 
         }
+        case PostActivity:
+        {
+            qDebug() << "发布活动验证开始/n";
+            QString rec;
+            QByteArray datas = m_buffer.mid(2*sizeof(qint64), totalBytes-2*sizeof(qint64));
+            rec.prepend(datas);
+            QJsonDocument jsonDocument = QJsonDocument::fromJson(rec.toLocal8Bit().data());
+            QJsonObject jsonObject = jsonDocument.object();
+            QString verify = _tcpserver->getDatabase()->PostActivityVerify(jsonObject.value("id").toString(),jsonObject.value("name").toString());
+
+            QJsonObject verify_yorn;
+            verify_yorn.insert("yorn",verify);
+            QString msg=QString(QJsonDocument(verify_yorn).toJson());
+            //构造数据包
+            qint64 totalBytes = 0;
+            QByteArray block;
+            QDataStream output(&block,QIODevice::WriteOnly);
+            output.setVersion(QDataStream::Qt_5_2);
+            totalBytes = msg.toUtf8().size();
+
+
+            //向缓冲区写入文件头
+            output<<qint64(totalBytes)<<qint64(PostActivityOK);
+            totalBytes += block.size();
+            output.device()->seek(0);
+            output<<totalBytes;
+            write(block);
+            block.resize(0);
+            for(int i=0;i<10000;i++)
+
+            block = msg.toUtf8();
+            write(block);
+            block.resize(0);
+            break;
         }
+        }
+
 
         //缓存多余的数据
         buffer = m_buffer.right(totalLen - totalBytes); //截取下一个数据包的数据，留作下次读取
