@@ -47,6 +47,11 @@ void TcpClientSocket::sendActivity()
     }
 }
 
+void TcpClientSocket::sendMember()
+{
+
+}
+
 void TcpClientSocket::clearActiviy()
 {
     QString msg = "clear activiy";
@@ -61,6 +66,32 @@ void TcpClientSocket::clearActiviy()
 
     //向缓冲区写入文件头
     output<<qint64(totalBytes)<<qint64(Clear_activity);
+    totalBytes += block.size();
+    output.device()->seek(0);
+    output<<totalBytes;
+    write(block);
+    block.resize(0);
+    for(int i=0;i<10000;i++)
+
+    block = msg.toUtf8();
+    write(block);
+    block.resize(0);
+}
+
+void TcpClientSocket::clearMenmberList()
+{
+    QString msg = "clear clearMemberList";
+
+    //构造数据包
+    qint64 totalBytes = 0;
+    QByteArray block;
+    QDataStream output(&block,QIODevice::WriteOnly);
+    output.setVersion(QDataStream::Qt_5_2);
+    totalBytes = msg.toUtf8().size();
+
+
+    //向缓冲区写入文件头
+    output<<qint64(totalBytes)<<qint64(Clear_memberList);
     totalBytes += block.size();
     output.device()->seek(0);
     output<<totalBytes;
@@ -285,6 +316,7 @@ void TcpClientSocket::dataReceived()
             QJsonDocument jsonDocument = QJsonDocument::fromJson(rec.toLocal8Bit().data());
             QJsonObject jsonObject = jsonDocument.object();
             bool joinc = _tcpserver->getDatabase()->joinCommunity(jsonObject.value("cname").toString(),jsonObject.value("name").toString());
+
             QJsonObject joinyorn;
             QString s;
             if(joinc)
@@ -316,6 +348,19 @@ void TcpClientSocket::dataReceived()
             block = msg.toUtf8();
             write(block);
             block.resize(0);
+
+
+            break;
+        }
+        case FlushMemberList:
+        {
+            QString rec;
+            QByteArray datas = m_buffer.mid(2*sizeof(qint64), totalBytes-2*sizeof(qint64));
+            rec.prepend(datas);
+            QJsonDocument jsonDocument = QJsonDocument::fromJson(rec.toLocal8Bit().data());
+            QJsonObject jsonObject = jsonDocument.object();
+
+            clearMenmberList();
 
 
             break;

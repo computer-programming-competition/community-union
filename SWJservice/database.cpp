@@ -33,7 +33,7 @@ void database::startconnect()
     hostName = "127.0.0.1";   // 主机名
     dbName = "SWJsql";   // 数据库名称
     userName = "root";   // 用户名
-    password = "root";   // 密码
+    password = "2241699du";   // 密码
     dbconn = QSqlDatabase::addDatabase("QMYSQL");
     dbconn.setHostName(hostName);
     dbconn.setDatabaseName(dbName);

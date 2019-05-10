@@ -190,6 +190,33 @@ void Client::enterCommunity(QString c,QString n)
      block.resize(0);
 }
 
+void Client::flushMemberList(QString menber)
+{
+    QJsonObject menbername;
+    menbername.insert("name",menber);
+     QString msg = QString(QJsonDocument(menbername).toJson());
+
+     qint64 totalBytes = 0;
+     QByteArray block;
+     QDataStream output(&block,QIODevice::WriteOnly);
+     output.setVersion(QDataStream::Qt_5_2);
+     totalBytes = msg.toUtf8().size();
+
+
+     //向缓冲区写入文件头
+     output<<qint64(totalBytes)<<qint64(FlushMemberList);
+     totalBytes += block.size();
+     output.device()->seek(0);
+     output<<totalBytes;
+     tcpSocket->write(block);
+     block.resize(0);
+     for(int i=0;i<10000;i++)
+
+         block = msg.toUtf8();
+     tcpSocket->write(block);
+     block.resize(0);
+}
+
 bool Client::loginok()
 {
     return m_loginging;
@@ -367,7 +394,7 @@ void Client::tcpConnected()
 {
     tcpSocket = new QTcpSocket(this);
     serverIP =new QHostAddress();
-    serverIP->setAddress("192.168.43.8");  //连接IP
+    serverIP->setAddress("127.0.0.1");  //连接IP
     //    tcpSocket->connectToHost();
     tcpSocket->connectToHost(*serverIP, 6688);
 

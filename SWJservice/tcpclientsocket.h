@@ -19,12 +19,15 @@ public:
     }
 
     void sendActivity();
+    void sendMember();
     void clearActiviy();
+    void clearMenmberList();
     void verifyaccount(QString n,QString p);
 
 signals:
     void disconnected(qintptr);
     void doFlushActivity();
+    void doFlushMemberList();
 
     void loginOk(bool s);
 private slots:

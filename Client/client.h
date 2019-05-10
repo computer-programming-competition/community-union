@@ -33,6 +33,7 @@ public:
     Q_INVOKABLE void mySignUp(QString name,QString ps);
     Q_INVOKABLE void postactivity(QString cid,QString cn);
     Q_INVOKABLE void enterCommunity(QString c,QString n);
+    Q_INVOKABLE void flushMemberList(QString menber);
 
 //    Q_INVOKABLE void StartConnect();
 //    Q_INVOKABLE void logining(QString name,QString password);

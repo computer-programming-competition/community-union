@@ -25,7 +25,7 @@ Page {
             border.width: dp(2)
             border.color: "lightgray"
             radius: dp(2)
-            Row {
+            RowLayout {
                 width: parent.width
                 height: parent.height
                 spacing: 3

@@ -25,6 +25,7 @@ void TcpServer::incomingConnection(qintptr socketDescriptor)
 
     connect(tcpClientSocket, SIGNAL(doFlushActivity()), this, SLOT(doFlushActivity()));
     connect(tcpClientSocket, SIGNAL(disconnected(qintptr)), this, SLOT(slotDisconnection(qintptr)));
+    connect(tcpClientSocket, SIGNAL(doFlushMemberList()), this, SLOT(doFlushMemberList()));
 
     tcpClientSocket->setSocketDescriptor(socketDescriptor);
 
@@ -39,6 +40,15 @@ void TcpServer::doFlushActivity()
     for(int i=0; i<tcpClientSocketList.count(); i++){
         TcpClientSocket *item = tcpClientSocketList.at(i);
         item->sendActivity();
+    }
+}
+
+void TcpServer::doFlushMemberList()
+{
+    for(int i=0; i<tcpClientSocketList.count(); i++){
+        TcpClientSocket *item = tcpClientSocketList.at(i);
+        item->clearMenmberList();
+        item->sendMember();
     }
 }
 
